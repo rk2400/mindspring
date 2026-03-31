@@ -1,0 +1,135 @@
+/**
+ * Initialize Email Templates
+ * Run this script to create default email templates
+ * 
+ * Usage: npx ts-node scripts/init-email-templates.ts
+ */
+
+import mongoose from 'mongoose';
+import EmailTemplate from '../lib/models/EmailTemplate';
+import { dbConfig } from '../lib/config';
+
+const defaultTemplates = [
+  {
+    type: 'ORDER_CREATED',
+    subject: 'Order Confirmed - HulaLoop',
+    body: `
+      <h2>Hello {{userName}}!</h2>
+      <p>Your order has been confirmed!</p>
+      <p><strong>Order ID:</strong> {{orderId}}</p>
+      <p><strong>Status:</strong> {{status}}</p>
+      <h3>Order Summary:</h3>
+      {{products}}
+      <p><strong>Total Amount:</strong> ₹{{totalAmount}}</p>
+      <p>Thank you for your purchase! We'll keep you updated as your items are crafted and shipped.</p>
+    `,
+  },
+  {
+    type: 'ORDER_PACKED',
+    subject: 'Your Order is Packed - HulaLoop',
+    body: `
+      <h2>Hello {{userName}}!</h2>
+      <p>Great news! Your order has been packed and is ready to ship.</p>
+      <p><strong>Order ID:</strong> {{orderId}}</p>
+      <p><strong>Status:</strong> {{status}}</p>
+      <h3>Order Summary:</h3>
+      {{products}}
+      <p><strong>Total Amount:</strong> ₹{{totalAmount}}</p>
+    `,
+  },
+  {
+    type: 'ORDER_SHIPPED',
+    subject: 'Your Order is Shipped - HulaLoop',
+    body: `
+      <h2>Hello {{userName}}!</h2>
+      <p>Your order is on its way!</p>
+      <p><strong>Order ID:</strong> {{orderId}}</p>
+      <p><strong>Status:</strong> {{status}}</p>
+      <h3>Order Summary:</h3>
+      {{products}}
+      <p><strong>Total Amount:</strong> ₹{{totalAmount}}</p>
+      <p>You'll receive your order soon—thank you for supporting handmade.</p>
+    `,
+  },
+  {
+    type: 'ORDER_DELIVERED',
+    subject: 'Order Delivered - HulaLoop',
+    body: `
+      <h2>Hello {{userName}}!</h2>
+      <p>Your order has been delivered!</p>
+      <p><strong>Order ID:</strong> {{orderId}}</p>
+      <p><strong>Status:</strong> {{status}}</p>
+      <h3>Order Summary:</h3>
+      {{products}}
+      <p><strong>Total Amount:</strong> ₹{{totalAmount}}</p>
+      <p>Thank you for shopping with HulaLoop! We hope you love your handmade pieces.</p>
+    `,
+  },
+  {
+    type: 'ORDER_CANCELLED',
+    subject: 'Order Cancelled - HulaLoop',
+    body: `
+      <h2>Hello {{userName}}!</h2>
+      <p>We're sorry to inform you that your order has been cancelled.</p>
+      <p><strong>Order ID:</strong> {{orderId}}</p>
+      <p><strong>Status:</strong> {{status}}</p>
+      <h3>Order Summary:</h3>
+      {{products}}
+      <p><strong>Total Amount:</strong> ₹{{totalAmount}}</p>
+      <p>If you have any questions or concerns, please contact our support team.</p>
+      <p>Thank you for your understanding.</p>
+    `,
+  },
+  {
+    type: 'PAYMENT_CONFIRMED',
+    subject: 'Payment Confirmed - HulaLoop',
+    body: `
+      <h2>Hello {{userName}}!</h2>
+      <p>Your payment has been confirmed successfully!</p>
+      <p><strong>Order ID:</strong> {{orderId}}</p>
+      <p><strong>Amount Received:</strong> ₹{{totalAmount}}</p>
+      <p>Thank you for your payment. Your order will be processed shortly and you'll receive a confirmation email soon.</p>
+      <p>If you have any questions, please don't hesitate to contact us.</p>
+    `,
+  },
+  {
+    type: 'ORDER_CONFIRMED',
+    subject: 'Your Order is Confirmed - HulaLoop',
+    body: `
+      <h2>Hello {{userName}}!</h2>
+      <p>Great news! Your order has been confirmed and will be shipped soon.</p>
+      <p><strong>Order ID:</strong> {{orderId}}</p>
+      <p><strong>Status:</strong> {{status}}</p>
+      <h3>Order Summary:</h3>
+      {{products}}
+      <p><strong>Total Amount:</strong> ₹{{totalAmount}}</p>
+      <p>We'll keep you updated as your order progresses. Thank you for shopping with HulaLoop!</p>
+    `,
+  },
+];
+
+async function initTemplates() {
+  try {
+    await mongoose.connect(dbConfig.uri);
+    console.log('Connected to MongoDB');
+
+    for (const template of defaultTemplates) {
+      await EmailTemplate.findOneAndUpdate(
+        { type: template.type },
+        template,
+        { upsert: true, new: true }
+      );
+      console.log(`✓ Template ${template.type} initialized`);
+    }
+
+    console.log('\nAll email templates initialized!');
+    await mongoose.disconnect();
+    process.exit(0);
+  } catch (error) {
+    console.error('Error initializing templates:', error);
+    process.exit(1);
+  }
+}
+
+initTemplates();
+

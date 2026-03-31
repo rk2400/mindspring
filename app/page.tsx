@@ -1,0 +1,174 @@
+import type { Metadata } from 'next';
+import Image from 'next/image';
+import Link from 'next/link';
+import { siteConfig } from '@/config/site-config';
+import { theme } from '@/config/theme';
+
+export const metadata: Metadata = {
+  title: `${siteConfig.name} · Home`,
+  description: siteConfig.description,
+};
+
+export default function HomePage() {
+  return (
+    <div className="bg-sky-50">
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0">
+          <Image
+            src={theme.hero.backgroundImage}
+            alt={theme.hero.alt}
+            fill
+            priority
+            className="object-cover object-center"
+          />
+          <div className="absolute inset-0 bg-slate-900/60" />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 lg:py-40">
+          <div className="max-w-3xl text-white">
+            <span className="inline-block py-1 px-4 rounded-full bg-primary-500/20 text-primary-100 text-sm font-semibold tracking-widest uppercase mb-6">
+              {theme.hero.tagline}
+            </span>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold tracking-tight leading-tight mb-6">
+              {theme.hero.title}
+            </h1>
+            <p className="text-lg sm:text-xl text-slate-200 leading-relaxed max-w-2xl mb-10">
+              {theme.hero.subtitle}
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Link
+                href={theme.hero.primaryCta.href}
+                className="btn btn-primary px-8 py-4"
+              >
+                {theme.hero.primaryCta.label}
+              </Link>
+              <Link
+                href={theme.hero.secondaryCta.href}
+                className="btn btn-secondary px-8 py-4"
+              >
+                {theme.hero.secondaryCta.label}
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-16">
+          <span className="text-primary-600 font-bold tracking-widest uppercase text-xs mb-2 block">
+            {theme.collections.label}
+          </span>
+          <h2 className="text-4xl font-serif font-medium text-slate-900">
+            {theme.collections.heading}
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {theme.collections.items.map((service) => (
+            <Link
+              key={service.title}
+              href={service.href}
+              className="group relative overflow-hidden rounded-3xl shadow-sm border border-slate-200 bg-white transition hover:-translate-y-1 hover:shadow-lg"
+            >
+              <div className="relative h-72 overflow-hidden">
+                <Image
+                  src={service.image}
+                  alt={service.title}
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+              </div>
+              <div className="p-8">
+                <h3 className="text-2xl font-semibold text-slate-900 mb-3">{service.title}</h3>
+                <p className="text-slate-600 leading-relaxed mb-6">{service.subtitle}</p>
+                <span className="inline-flex items-center gap-2 text-primary-600 font-semibold uppercase tracking-widest text-sm">
+                  Learn more
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </span>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <section className="bg-white py-24 border-y border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <span className="text-primary-600 font-bold tracking-widest uppercase text-xs mb-2 block">
+              Why Families Choose Mindspring
+            </span>
+            <h2 className="text-4xl font-serif font-medium text-slate-900">
+              A calm, practical approach to emotional growth
+            </h2>
+          </div>
+
+          <div className="grid gap-8 md:grid-cols-3">
+            {theme.values.map((value) => (
+              <div key={value.title} className="rounded-3xl border border-slate-200 bg-slate-50 p-10 text-center">
+                <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-primary-50 text-primary-600">
+                  <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-semibold text-slate-900 mb-3">{value.title}</h3>
+                <p className="text-slate-600 leading-relaxed">{value.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-16">
+          <span className="text-primary-600 font-bold tracking-widest uppercase text-xs mb-2 block">Stories of growth</span>
+          <h2 className="text-4xl font-serif font-medium text-slate-900">Trusted support from families</h2>
+        </div>
+
+        <div className="grid gap-8 md:grid-cols-3">
+          {theme.testimonials.map((testimonial) => (
+            <div key={testimonial.name} className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="relative h-14 w-14 overflow-hidden rounded-full bg-slate-100">
+                  <Image src={testimonial.image} alt={testimonial.name} fill className="object-cover" />
+                </div>
+                <div>
+                  <p className="font-semibold text-slate-900">{testimonial.name}</p>
+                  <p className="text-sm text-slate-500">{testimonial.location}</p>
+                </div>
+              </div>
+              <p className="text-slate-700 leading-relaxed">{testimonial.quote}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="relative py-24 bg-slate-900 text-white overflow-hidden">
+        <div className="absolute inset-0 opacity-40">
+          <Image
+            src={theme.about.hero.backgroundImage}
+            alt={theme.about.hero.alt}
+            fill
+            className="object-cover"
+            priority
+          />
+        </div>
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <span className="inline-block py-1 px-3 rounded-full bg-white/10 backdrop-blur border border-white/20 text-xs font-bold tracking-widest uppercase mb-8">
+            {theme.about.hero.tagline}
+          </span>
+          <h2 className="text-3xl md:text-5xl font-serif font-medium mb-8 leading-tight text-white/90">
+            {theme.about.hero.title}
+          </h2>
+          <p className="max-w-2xl mx-auto text-lg text-slate-300 mb-10 leading-relaxed">
+            {theme.about.story.paragraphs.join(' ')}
+          </p>
+          <Link href="/about" className="btn btn-primary bg-white text-slate-900 hover:bg-slate-100 border-none inline-flex">
+            Read Our Full Story
+          </Link>
+        </div>
+      </section>
+    </div>
+  );
+}
