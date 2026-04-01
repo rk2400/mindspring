@@ -54,7 +54,7 @@ export default function HelpPage() {
           </div>
           <div className="relative w-full md:w-40 h-32 rounded-xl overflow-hidden shadow-sm">
             <Image
-              src="https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=800&q=80"
+              src="https://plus.unsplash.com/premium_photo-1683865775849-b958669dca26?q=80&w=2064&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
               alt="support"
               fill
               className="object-cover"
