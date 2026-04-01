@@ -43,7 +43,36 @@ export default function RootLayout({
           <Header />
           {children}
           <Footer />
-          <Toaster position="top-right" />
+          <Toaster
+            position="top-right"
+            toastOptions={{
+              duration: 5000,
+              style: {
+                borderRadius: '20px',
+                background: '#ffffff',
+                color: '#111827',
+                boxShadow: '0 24px 70px rgba(15, 23, 42, 0.18)',
+                border: '1px solid rgba(148, 163, 184, 0.24)',
+                padding: '18px 22px',
+                minWidth: '320px',
+                maxWidth: '460px',
+                fontSize: '15px',
+                lineHeight: '1.65',
+              },
+              success: {
+                iconTheme: {
+                  primary: '#16a34a',
+                  secondary: '#ffffff',
+                },
+              },
+              error: {
+                iconTheme: {
+                  primary: '#dc2626',
+                  secondary: '#ffffff',
+                },
+              },
+            }}
+          />
         </UserProvider>
       </body>
     </html>

@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/db';
 import Admin from '@/lib/models/Admin';
-import { comparePassword, generateToken } from '@/lib/auth';
+import { comparePassword, generateToken, hashPassword } from '@/lib/auth';
 import { adminLoginSchema } from '@/lib/validations';
+import { adminConfig } from '@/lib/config';
 
 export async function POST(req: NextRequest) {
   try {
@@ -14,14 +15,29 @@ export async function POST(req: NextRequest) {
     console.log('[auth/admin/login] Headers:', Object.fromEntries(req.headers.entries()));
     console.log('[auth/admin/login] Body:', { email });
 
-    // Find admin
-    const admin = await Admin.findOne({ email: email.toLowerCase() });
-    console.log('[auth/admin/login] Admin lookup result for', email.toLowerCase(), !!admin);
-    if (!admin) {
+    const normalizedEmail = email.toLowerCase().trim();
+    const expectedEmail = adminConfig.email.toLowerCase().trim();
+
+    if (normalizedEmail !== expectedEmail) {
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
     }
 
-    // Verify password
+    // Ensure admin exists and is in sync with env-managed credentials.
+    let admin = await Admin.findOne({ email: normalizedEmail });
+    if (!admin) {
+      console.log('[auth/admin/login] Admin record missing for', normalizedEmail, '- creating using ADMIN_PASSWORD');
+      const passwordHash = await hashPassword(adminConfig.password);
+      admin = await Admin.create({ email: normalizedEmail, passwordHash });
+    } else {
+      const envPasswordMatches = await comparePassword(adminConfig.password, admin.passwordHash);
+      if (!envPasswordMatches) {
+        console.log('[auth/admin/login] Admin password hash out of sync with env ADMIN_PASSWORD. Updating stored hash.');
+        admin.passwordHash = await hashPassword(adminConfig.password);
+        await admin.save();
+      }
+    }
+
+    // Verify provided password against the stored hash.
     const isValid = await comparePassword(password, admin.passwordHash);
     if (!isValid) {
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });

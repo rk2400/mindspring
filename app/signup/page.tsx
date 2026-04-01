@@ -55,8 +55,8 @@ export default function SignupPage() {
     setLoading(true);
     try {
       const res = await createAccount(formData.name, formData.email, formData.phone);
-      await login(formData.email);
-      toast.success('Account created! We sent an OTP to your email.');
+      await login(formData.email, 'signup');
+      toast.success('Account created! We sent a verification OTP to your email.');
       router.push(`/login?email=${encodeURIComponent(formData.email)}&step=otp`);
     } catch (error: any) {
       toast.error(error.message);
@@ -70,17 +70,32 @@ export default function SignupPage() {
       {/* Left Side - Image */}
       <div className="hidden lg:block lg:w-1/2 relative overflow-hidden">
         <Image
-          src="https://images.unsplash.com/photo-1602523961358-f9f03dd557db?q=80&w=2000&auto=format&fit=crop"
-          alt="Signup Background"
+          src="https://images.unsplash.com/photo-1604881991720-f91add269bed?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           fill
           className="object-cover"
-          priority
-        />
-        <div className="absolute inset-0 bg-stone-900/40 backdrop-blur-[2px] flex flex-col justify-between p-12 text-white">
-          <Link href="/" className="text-2xl font-serif tracking-wide">Mindspring</Link>
-          <div className="max-w-md">
-            <h2 className="text-4xl font-serif mb-4 text-white/80 ">Join our supportive community</h2>
-            <p className="text-stone-200 text-lg">Create an account to receive service updates, booking details, and child development insights.</p>
+          quality={90}
+          sizes="(min-width: 1024px) 50vw, 100vw"
+          priority alt={''}        />
+        <div className="absolute inset-0 bg-gradient-to-br from-stone-900/95 via-stone-900/75 to-stone-900/30" />
+        <div className="absolute inset-0 flex flex-col justify-between p-12 text-white">
+          <div className="flex items-center justify-between gap-4">
+            {/* <Link href="/" className="text-2xl font-serif tracking-wide">Mindspring</Link> */}
+            <span className="rounded-full bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-white/80 shadow-sm">
+              Child-centred care
+            </span>
+          </div>
+          <div className="max-w-md space-y-6">
+            <div className="rounded-[28px] border border-white/15 bg-white/10 p-8 shadow-[0_28px_80px_rgba(15,23,42,0.24)] backdrop-blur-xl">
+              <h2 className="text-4xl font-serif mb-4 text-white">Join our supportive community</h2>
+              <p className="text-stone-200 text-lg">Create an account to receive service updates, appointment details, and child development insights.</p>
+            </div>
+            <div className="grid gap-3 text-sm text-white/80">
+              <p className="inline-flex items-center gap-2 rounded-2xl bg-white/10 px-4 py-3">
+                <span className="h-2.5 w-2.5 rounded-full bg-emerald-300" />
+                Expert guidance
+              </p>
+   
+            </div>
           </div>
         </div>
       </div>

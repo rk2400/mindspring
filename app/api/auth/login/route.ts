@@ -13,6 +13,7 @@ export async function POST(req: NextRequest) {
 
     const body = await req.json();
     const { email } = loginSchema.parse(body);
+    const purpose = body?.purpose === 'signup' ? 'signup' : 'login';
     console.log('[auth/login] Incoming login request', { url: req.url, method: req.method });
     console.log('[auth/login] Headers:', Object.fromEntries(req.headers.entries()));
     console.log('[auth/login] Body:', { email });
@@ -74,7 +75,10 @@ export async function POST(req: NextRequest) {
 
     // Send OTP email (use original email for display, normalized for storage)
     console.log('[auth/login] Sending OTP email to', normalizedEmail);
-    const sent = await emailService.sendOTP(normalizedEmail, code);
+    const sent = await emailService.sendOTP(normalizedEmail, code, {
+      purpose,
+      userName: user?.name,
+    });
     if (!sent) {
       return NextResponse.json(
         { error: 'Failed to send OTP email. Please try again later.' },

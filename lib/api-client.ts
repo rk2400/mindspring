@@ -81,11 +81,12 @@ export async function removeFromWishlist(productId: string) {
   return data;
 }
 
-export async function login(email: string) {
+export async function login(email: string, purpose?: 'login' | 'signup') {
+  const body = purpose ? { email, purpose } : { email };
   const res = await fetch(`${API_URL}/api/auth/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email }),
+    body: JSON.stringify(body),
   });
   const data = await res.json();
   if (!res.ok) throw new Error(data.error || 'Failed to send OTP');

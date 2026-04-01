@@ -59,22 +59,60 @@ class EmailService {
     }
   }
 
-  async sendOTP(email: string, code: string): Promise<boolean> {
+  async sendOTP(
+    email: string,
+    code: string,
+    options?: { purpose?: 'login' | 'signup'; userName?: string }
+  ): Promise<boolean> {
+    const purpose = options?.purpose === 'signup' ? 'signup' : 'login';
+    const userName = options?.userName?.trim();
+    const greeting = userName ? `Hi ${userName},` : 'Hi there,';
+    const title = purpose === 'signup'
+      ? `Welcome to ${appConfig.name}!`
+      : `${appConfig.name} OTP Code`;
+    const subtitle = purpose === 'signup'
+      ? 'Please verify your email to complete account setup.'
+      : 'Use this OTP to sign in securely.';
+    const subject = purpose === 'signup'
+      ? `Welcome to ${appConfig.name}! Verify your email`
+      : `Your ${appConfig.name} Login OTP`;
+    const expiryMinutes = authConfig.otpExpiryMinutes;
+
     const html = `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <h2 style="color: #f97316;">${appConfig.name} - Login OTP</h2>
-        <p>Your OTP code is:</p>
-        <div style="background: #fff7ed; padding: 20px; text-align: center; margin: 20px 0;">
-          <h1 style="color: #ea580c; font-size: 32px; margin: 0;">${code}</h1>
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background: #f7f5f1;">
+        <div style="background: #ffedd5; border: 1px solid #fcd9b6; border-radius: 14px; padding: 28px; text-align: center;">
+          <h2 style="color: #c2410c; margin: 0 0 12px;">${title}</h2>
+          <p style="color: #92400e; margin: 0 0 24px;">${subtitle}</p>
+          <div style="background: #ffffff; border: 1px solid #f3e7dc; border-radius: 16px; padding: 28px; display: inline-block; min-width: 220px;">
+            <p style="margin: 0 0 8px; color: #7c2d12; font-size: 14px; letter-spacing: 0.05em; text-transform: uppercase;">Your OTP code</p>
+            <h1 style="margin: 0; color: #b45309; font-size: 40px; letter-spacing: 4px;">${code}</h1>
+          </div>
         </div>
-        <p>This code will expire in ${authConfig.otpExpiryMinutes} minutes.</p>
-        <p style="color: #666; font-size: 12px;">If you didn't request this code, please ignore this email.</p>
+
+        <div style="margin-top: 24px; background: #ffffff; border: 1px solid #f3e7dc; border-radius: 14px; padding: 24px;">
+          <p style="margin: 0 0 12px; color: #333333; font-size: 16px;">${greeting}</p>
+          <p style="margin: 0 0 16px; color: #555555; font-size: 15px; line-height: 1.7;">
+            ${purpose === 'signup'
+              ? 'Thanks for joining Mindspring! Use the PIN above to verify your email and finish setting up your account.'
+              : 'Use the PIN above to sign in to your Mindspring account. This helps keep your account secure.'}
+          </p>
+          <p style="margin: 0 0 8px; color: #555555; font-size: 14px;">
+            This code expires in <strong>${expiryMinutes} minutes</strong>.
+          </p>
+          <p style="margin: 0; color: #777777; font-size: 13px;">
+            If you did not request this code, you can safely ignore this email.
+          </p>
+        </div>
+
+        <p style="margin: 20px 0 0; color: #8a4b08; font-size: 13px; text-align: center;">
+          Need help? Reply to this email or visit our support page.
+        </p>
       </div>
     `;
 
     return this.sendEmail({
       to: email,
-      subject: `Your ${appConfig.name} Login OTP`,
+      subject,
       html,
     });
   }

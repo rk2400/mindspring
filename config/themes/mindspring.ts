@@ -170,21 +170,21 @@ export const mindspringTheme = {
       items: [
         {
           image:
-            'https://images.unsplash.com/photo-1524504388940-1e392ead81f2?auto=format&fit=crop&w=900&q=80',
+            'https://images.unsplash.com/photo-1540650724985-be15ecc5fc79?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
           title: 'Child-led growth',
           description:
             'Therapy sessions that build confidence, focus, and independence through play and communication.',
         },
         {
           image:
-            'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=80',
+            'https://plus.unsplash.com/premium_photo-1733266883075-63500ef3faca?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
           title: 'Child support',
           description:
             'Practical parent coaching and child-centered strategies for calmer routines and stronger confidence.',
         },
         {
           image:
-            'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=900&q=80',
+            'https://images.unsplash.com/photo-1529390079861-591de354faf5?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
           title: 'Hands-on learning',
           description:
             'Sensory-informed tools and activities that help children explore emotions and skills safely.',
@@ -229,7 +229,7 @@ export const mindspringTheme = {
       title: "Questions about your child's next support step?",
       subtitle: 'Reach out to explore child development support, parent coaching, or a consultation tailored to your child’s strengths.',
     },
-    email: 'hello@mindspring.co',
+    email: 'mindspringindia@gmail.com',
     phone: '+91 9971996493 | +91 9266561109',
     studio: 'Vaishali, Ghaziabad, India',
   },
