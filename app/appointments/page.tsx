@@ -1,6 +1,6 @@
 'use client';
 
-import { FormEvent, useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
@@ -14,6 +14,19 @@ const therapyOptions = [
   'Special Education',
   'Sensory Integration',
   'Cognitive Skills Training',
+] as const;
+
+const availableTimeSlots = [
+  '09:00',
+  '10:00',
+  '11:00',
+  '12:00',
+  '13:00',
+  '14:00',
+  '15:00',
+  '16:00',
+  '17:00',
+  '18:00',
 ] as const;
 
 interface Appointment {
@@ -37,8 +50,19 @@ export default function AppointmentsPage() {
   const [submitting, setSubmitting] = useState(false);
   const [loadingAppointments, setLoadingAppointments] = useState(false);
   const today = new Date().toISOString().slice(0, 10);
-  const activeAppointments = appointments.filter((appointment) => appointment.status !== 'CANCELLED' && appointment.status !== 'COMPLETED');
-  const canBookMore = activeAppointments.length < 3;
+  const activeUpcomingAppointment = useMemo(
+    () =>
+      appointments.find((appointment) => {
+        if (appointment.status === 'CANCELLED' || appointment.status === 'COMPLETED') {
+          return false;
+        }
+
+        const appointmentDateTime = new Date(`${appointment.preferredDate}T${appointment.preferredTime}`);
+        return appointmentDateTime.getTime() >= Date.now();
+      }),
+    [appointments]
+  );
+  const canBookAppointment = !activeUpcomingAppointment;
 
   useEffect(() => {
     if (!userLoading && !user) {
@@ -67,6 +91,22 @@ export default function AppointmentsPage() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (!preferredDate || !preferredTime) {
+      toast.error('Please select your preferred date and time');
+      return;
+    }
+
+    if (!availableTimeSlots.includes(preferredTime as (typeof availableTimeSlots)[number])) {
+      toast.error('Appointments can only be scheduled between 9:00 AM and 6:00 PM');
+      return;
+    }
+
+    if (!canBookAppointment) {
+      toast.error('You already have an active upcoming appointment');
+      return;
+    }
+
     setSubmitting(true);
 
     try {
@@ -93,6 +133,16 @@ export default function AppointmentsPage() {
     }).format(new Date(value));
   };
 
+  const formatTime = (value: string) => {
+    const [hours, minutes] = value.split(':').map(Number);
+    const date = new Date();
+    date.setHours(hours, minutes, 0, 0);
+    return new Intl.DateTimeFormat('en-US', {
+      hour: 'numeric',
+      minute: '2-digit',
+    }).format(date);
+  };
+
   return (
     <div className="min-h-screen bg-slate-50">
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
@@ -102,7 +152,7 @@ export default function AppointmentsPage() {
               <p className="text-sm uppercase tracking-[0.35em] text-primary-700 font-semibold">Appointment booking</p>
               <h1 className="mt-4 text-4xl md:text-5xl font-serif text-slate-900">Schedule a Mindspring session</h1>
               <p className="mt-4 text-base md:text-lg text-slate-600 leading-8">
-                Request a session for your child with one of our therapy specialists. Choose a therapy type, share your preferred date, and we’ll follow up with a confirmed appointment.
+                Request a structured therapy session with one of our specialists. Select a therapy plan, choose an available daytime slot between 9:00 AM and 6:00 PM, and share goals so our team can review and confirm the appointment.
               </p>
             </div>
           </div>
@@ -110,8 +160,41 @@ export default function AppointmentsPage() {
           <div className="grid gap-8 lg:grid-cols-[1.2fr_1fr] p-8 sm:p-12">
             <section className="space-y-6">
               <div className="bg-slate-50 rounded-3xl p-6 border border-slate-100">
-                <h2 className="text-2xl font-semibold text-slate-900 mb-3">Book a session</h2>
-                <form onSubmit={handleSubmit} className="space-y-5">
+                <div className="flex flex-col gap-4 border-b border-slate-200 pb-5">
+                  <div>
+                    <h2 className="text-2xl font-semibold text-slate-900">Book a session</h2>
+                    <p className="mt-2 text-sm text-slate-600">
+                      Sessions are scheduled in daytime clinical hours only. One active upcoming appointment is allowed per account.
+                    </p>
+                  </div>
+
+                  <div className="grid gap-3 sm:grid-cols-3">
+                    <div className="rounded-2xl bg-white p-4 border border-slate-200">
+                      <p className="text-xs uppercase tracking-[0.25em] text-slate-500 font-semibold">Hours</p>
+                      <p className="mt-2 text-sm font-semibold text-slate-900">9:00 AM – 6:00 PM</p>
+                    </div>
+                    <div className="rounded-2xl bg-white p-4 border border-slate-200">
+                      <p className="text-xs uppercase tracking-[0.25em] text-slate-500 font-semibold">Session length</p>
+                      <p className="mt-2 text-sm font-semibold text-slate-900">30-minute consultation</p>
+                    </div>
+                    <div className="rounded-2xl bg-white p-4 border border-slate-200">
+                      <p className="text-xs uppercase tracking-[0.25em] text-slate-500 font-semibold">Booking rule</p>
+                      <p className="mt-2 text-sm font-semibold text-slate-900">One active booking at a time</p>
+                    </div>
+                  </div>
+                </div>
+
+                {activeUpcomingAppointment ? (
+                  <div className="mt-5 rounded-2xl border border-amber-200 bg-amber-50 p-4">
+                    <p className="text-sm font-semibold text-amber-900">An active appointment is already scheduled</p>
+                    <p className="mt-2 text-sm text-amber-800">
+                      {activeUpcomingAppointment.therapyType} on {formatDate(activeUpcomingAppointment.preferredDate)} at {formatTime(activeUpcomingAppointment.preferredTime)}.
+                      You can request another session after this one is completed or cancelled.
+                    </p>
+                  </div>
+                ) : null}
+
+                <form onSubmit={handleSubmit} className="space-y-5 mt-6">
                   <label className="block">
                     <span className="text-sm font-medium text-slate-700">Therapy type</span>
                     <select
@@ -141,36 +224,44 @@ export default function AppointmentsPage() {
                     </label>
                     <label className="block">
                       <span className="text-sm font-medium text-slate-700">Preferred time</span>
-                      <input
-                        type="time"
+                      <select
                         value={preferredTime}
                         onChange={(event) => setPreferredTime(event.target.value)}
                         className="mt-2 w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 focus:border-primary-500 focus:outline-none"
                         required
-                      />
+                      >
+                        <option value="">Select a time slot</option>
+                        {availableTimeSlots.map((slot) => (
+                          <option key={slot} value={slot}>
+                            {formatTime(slot)}
+                          </option>
+                        ))}
+                      </select>
                     </label>
                   </div>
 
                   <label className="block">
-                    <span className="text-sm font-medium text-slate-700">Notes (optional)</span>
+                    <span className="text-sm font-medium text-slate-700">Session concerns and goals</span>
                     <textarea
                       value={notes}
                       onChange={(event) => setNotes(event.target.value)}
                       rows={4}
                       className="mt-2 w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 focus:border-primary-500 focus:outline-none"
-                      placeholder="Share any priorities or goals for the session"
+                      placeholder="Describe concerns, therapy goals, school challenges, sensory needs, or anything our therapist should know before the session"
                     />
                   </label>
 
                   <button
                     type="submit"
-                    disabled={submitting || !canBookMore}
+                    disabled={submitting || !canBookAppointment}
                     className="btn btn-primary w-full py-3 text-sm font-semibold"
                   >
                     {submitting ? 'Requesting…' : 'Request appointment'}
                   </button>
-                  {!canBookMore ? (
-                    <p className="mt-3 text-sm text-rose-600">You already have 3 active appointment requests. Please wait until one is completed or cancelled before booking more.</p>
+                  {!canBookAppointment ? (
+                    <p className="mt-3 text-sm text-rose-600">
+                      A new booking can only be requested when you do not have any active upcoming appointment.
+                    </p>
                   ) : null}
                 </form>
               </div>
@@ -178,9 +269,9 @@ export default function AppointmentsPage() {
               <div className="bg-slate-50 rounded-3xl p-6 border border-slate-100">
                 <h3 className="text-lg font-semibold text-slate-900">How it works</h3>
                 <ul className="mt-4 space-y-3 text-slate-600">
-                  <li>• Submit your session request and preferred schedule.</li>
-                  <li>• We confirm availability and send a booking update.</li>
-                  <li>• Your appointment will appear in your profile once confirmed.</li>
+                  <li>• Choose a therapy service, date, and a daytime slot between 9:00 AM and 6:00 PM.</li>
+                  <li>• Share your child’s needs so our team can prepare before confirming availability.</li>
+                  <li>• Once the request is reviewed, your appointment status will update in your account.</li>
                 </ul>
                 <p className="mt-4 text-sm text-slate-500">
                   You must be logged in to request an appointment. If you are not signed in, you will be redirected to the login page.
@@ -203,7 +294,7 @@ export default function AppointmentsPage() {
                   </div>
                 ) : appointments.length === 0 ? (
                   <div className="rounded-3xl p-8 bg-slate-50 text-center text-slate-500">
-                    No appointment requests yet. Submit one using the form.
+                    No appointment requests yet. Submit one using the booking form.
                   </div>
                 ) : (
                   <div className="space-y-4">
@@ -213,7 +304,7 @@ export default function AppointmentsPage() {
                           <div>
                             <p className="text-sm text-slate-500">{appointment.therapyType}</p>
                             <h3 className="mt-1 text-lg font-semibold text-slate-900">{formatDate(appointment.preferredDate)}</h3>
-                            <p className="text-sm text-slate-500">{appointment.preferredTime}</p>
+                            <p className="text-sm text-slate-500">{formatTime(appointment.preferredTime)}</p>
                           </div>
                           <span className="rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em] text-primary-700 bg-primary-50">
                             {appointment.status}

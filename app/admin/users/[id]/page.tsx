@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import AdminHeader from '@/components/AdminHeader';
-import { getAdminUser, getAdminUserAppointments } from '@/lib/api-client';
+import { getAdminUser, getAdminUserAppointments, updateAdminUser } from '@/lib/api-client';
 import toast from 'react-hot-toast';
 
 export default function AdminUserProfilePage() {
@@ -13,6 +13,8 @@ export default function AdminUserProfilePage() {
   const userId = params?.id as string;
   const [user, setUser] = useState<any>(null);
   const [appointments, setAppointments] = useState<any[]>([]);
+  const [adminNotes, setAdminNotes] = useState('');
+  const [savingNotes, setSavingNotes] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -27,6 +29,7 @@ export default function AdminUserProfilePage() {
         ]);
         setUser(userData);
         setAppointments(appointmentsData);
+        setAdminNotes(userData.adminNotes || '');
       } catch (error: any) {
         if (error.message.includes('Unauthorized') || error.message.includes('Admin')) {
           router.push('/admin/login');
@@ -43,6 +46,22 @@ export default function AdminUserProfilePage() {
 
   const formatDateTime = (date: string, time: string) => {
     return `${new Date(date).toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })} at ${time}`;
+  };
+
+  const handleSaveNotes = async () => {
+    if (!user?._id) return;
+
+    setSavingNotes(true);
+    try {
+      const updatedUser = await updateAdminUser(user._id, { adminNotes });
+      setUser(updatedUser);
+      setAdminNotes(updatedUser.adminNotes || '');
+      toast.success('Admin notes saved');
+    } catch (error: any) {
+      toast.error(error.message || 'Unable to save admin notes');
+    } finally {
+      setSavingNotes(false);
+    }
   };
 
   if (loading) {
@@ -85,9 +104,10 @@ export default function AdminUserProfilePage() {
         </div>
 
         <div className="grid gap-6 lg:grid-cols-[0.95fr_1.1fr] mb-8">
-          <div className="rounded-3xl bg-white p-6 border border-slate-200 shadow-sm">
-            <h2 className="text-2xl font-semibold text-slate-900 mb-4">Account details</h2>
-            <div className="space-y-4 text-sm text-slate-700">
+          <div className="space-y-6">
+            <div className="rounded-3xl bg-white p-6 border border-slate-200 shadow-sm">
+              <h2 className="text-2xl font-semibold text-slate-900 mb-4">Account details</h2>
+              <div className="space-y-4 text-sm text-slate-700">
               <div>
                 <p className="text-slate-500">Name</p>
                 <p className="mt-1 font-semibold text-slate-900">{user.name || 'N/A'}</p>
@@ -110,6 +130,33 @@ export default function AdminUserProfilePage() {
                   {user.locked ? 'Locked' : 'Active'}
                 </p>
               </div>
+              </div>
+            </div>
+
+            <div className="rounded-3xl bg-white p-6 border border-slate-200 shadow-sm">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <h2 className="text-2xl font-semibold text-slate-900">Admin notes</h2>
+                  <p className="mt-2 text-sm text-slate-600">Visible only to admins on this user profile.</p>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleSaveNotes}
+                  disabled={savingNotes}
+                  className="inline-flex rounded-full bg-primary-600 px-4 py-2 text-sm font-semibold text-white hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-70"
+                >
+                  {savingNotes ? 'Saving...' : 'Save notes'}
+                </button>
+              </div>
+              <textarea
+                value={adminNotes}
+                onChange={(event) => setAdminNotes(event.target.value)}
+                rows={8}
+                maxLength={2000}
+                placeholder="Add private notes about this user for the admin team..."
+                className="mt-5 w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm text-slate-700 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-100"
+              />
+              <p className="mt-2 text-xs text-slate-500">{adminNotes.length}/2000 characters</p>
             </div>
           </div>
 

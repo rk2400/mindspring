@@ -455,16 +455,20 @@ export async function getAdminUsers() {
   return data.users;
 }
 
-export async function updateAdminUserLock(id: string, locked: boolean) {
+export async function updateAdminUser(id: string, payload: { locked?: boolean; adminNotes?: string }) {
   const res = await fetch(`${API_URL}/api/admin/users/${id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     credentials: 'include',
-    body: JSON.stringify({ locked }),
+    body: JSON.stringify(payload),
   });
   const data = await res.json();
   if (!res.ok) throw new Error(data.error || 'Failed to update user');
   return data.user;
+}
+
+export async function updateAdminUserLock(id: string, locked: boolean) {
+  return updateAdminUser(id, { locked });
 }
 
 export async function getAdminUser(id: string) {

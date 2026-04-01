@@ -6,6 +6,7 @@ export interface IUser extends Document {
   phone: string;
   verified: boolean;
   locked?: boolean;
+  adminNotes?: string;
   address?: {
     full?: string;
     street?: string;
@@ -70,6 +71,11 @@ const UserSchema: Schema = new Schema(
       type: Boolean,
       default: false,
       index: true,
+    },
+    adminNotes: {
+      type: String,
+      trim: true,
+      default: '',
     },
   },
   {

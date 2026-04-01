@@ -1,5 +1,14 @@
 import { z } from 'zod';
 
+const appointmentTimeSchema = z
+  .string()
+  .regex(/^([01]\d|2[0-3]):[0-5]\d$/, 'Preferred time must be in HH:MM format')
+  .refine((value) => {
+    const [hours, minutes] = value.split(':').map(Number);
+    const totalMinutes = hours * 60 + minutes;
+    return totalMinutes >= 9 * 60 && totalMinutes <= 18 * 60;
+  }, 'Appointments can only be scheduled between 9:00 AM and 6:00 PM');
+
 export const loginSchema = z.object({
   email: z.string().email('Invalid email address'),
 });
@@ -30,7 +39,7 @@ export const appointmentSchema = z.object({
     'Cognitive Skills Training',
   ]),
   preferredDate: z.string().regex(/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/, 'Date must be in YYYY-MM-DD format'),
-  preferredTime: z.string().min(1, 'Preferred time is required'),
+  preferredTime: appointmentTimeSchema,
   notes: z.string().max(500).optional(),
   duration: z.string().max(100).optional(),
 });

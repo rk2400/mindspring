@@ -47,13 +47,25 @@ async function postHandler(req: AuthRequest) {
       return NextResponse.json({ error: 'Preferred date cannot be in the past.' }, { status: 400 });
     }
 
-    const activeCount = await Appointment.countDocuments({
+    const existingActiveUpcomingAppointment = await Appointment.findOne({
       userId: req.user.userId,
       status: { $in: ['REQUESTED', 'CONFIRMED'] },
-    });
+      $or: [
+        { preferredDate: { $gt: preferredDate } },
+        {
+          preferredDate,
+          preferredTime: { $gte: preferredTime },
+        },
+      ],
+    }).sort({ preferredDate: 1, preferredTime: 1 });
 
-    if (activeCount >= 3) {
-      return NextResponse.json({ error: 'You can only have up to 3 active appointments at a time.' }, { status: 400 });
+    if (existingActiveUpcomingAppointment) {
+      return NextResponse.json(
+        {
+          error: 'You already have an active upcoming appointment. Please complete or cancel it before booking another session.',
+        },
+        { status: 400 }
+      );
     }
 
     const appointment = await Appointment.create({

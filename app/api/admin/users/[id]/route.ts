@@ -4,8 +4,9 @@ import User from '@/lib/models/User';
 import { withAdminAuth, AuthRequest } from '@/lib/middleware';
 import { z } from 'zod';
 
-const lockSchema = z.object({
-  locked: z.boolean(),
+const updateUserSchema = z.object({
+  locked: z.boolean().optional(),
+  adminNotes: z.string().max(2000).optional(),
 });
 
 async function handler(req: AuthRequest, { params }: { params: { id: string } }) {
@@ -14,13 +15,20 @@ async function handler(req: AuthRequest, { params }: { params: { id: string } })
 
     if (req.method === 'PUT') {
       const body = await req.json();
-      const data = lockSchema.parse(body);
+      const data = updateUserSchema.parse(body);
 
-      const user = await User.findByIdAndUpdate(
-        params.id,
-        { locked: data.locked },
-        { new: true, runValidators: true }
-      );
+      const updates: { locked?: boolean; adminNotes?: string } = {};
+      if (typeof data.locked === 'boolean') {
+        updates.locked = data.locked;
+      }
+      if (typeof data.adminNotes === 'string') {
+        updates.adminNotes = data.adminNotes.trim();
+      }
+
+      const user = await User.findByIdAndUpdate(params.id, updates, {
+        new: true,
+        runValidators: true,
+      });
 
       if (!user) {
         return NextResponse.json({ error: 'User not found' }, { status: 404 });
@@ -30,7 +38,7 @@ async function handler(req: AuthRequest, { params }: { params: { id: string } })
     }
 
     if (req.method === 'GET') {
-      const user = await User.findById(params.id).select('name email phone createdAt locked');
+      const user = await User.findById(params.id).select('name email phone createdAt locked adminNotes');
       if (!user) {
         return NextResponse.json({ error: 'User not found' }, { status: 404 });
       }
@@ -48,4 +56,3 @@ async function handler(req: AuthRequest, { params }: { params: { id: string } })
 
 export const GET = withAdminAuth(handler);
 export const PUT = withAdminAuth(handler);
-
