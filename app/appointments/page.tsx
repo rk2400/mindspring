@@ -168,20 +168,6 @@ export default function AppointmentsPage() {
                     </p>
                   </div>
 
-                  <div className="grid gap-3 sm:grid-cols-3">
-                    <div className="rounded-2xl bg-white p-4 border border-slate-200">
-                      <p className="text-xs uppercase tracking-[0.25em] text-slate-500 font-semibold">Hours</p>
-                      <p className="mt-2 text-sm font-semibold text-slate-900">9:00 AM – 6:00 PM</p>
-                    </div>
-                    <div className="rounded-2xl bg-white p-4 border border-slate-200">
-                      <p className="text-xs uppercase tracking-[0.25em] text-slate-500 font-semibold">Session length</p>
-                      <p className="mt-2 text-sm font-semibold text-slate-900">30-minute consultation</p>
-                    </div>
-                    <div className="rounded-2xl bg-white p-4 border border-slate-200">
-                      <p className="text-xs uppercase tracking-[0.25em] text-slate-500 font-semibold">Booking rule</p>
-                      <p className="mt-2 text-sm font-semibold text-slate-900">One active booking at a time</p>
-                    </div>
-                  </div>
                 </div>
 
                 {activeUpcomingAppointment ? (
@@ -266,17 +252,7 @@ export default function AppointmentsPage() {
                 </form>
               </div>
 
-              <div className="bg-slate-50 rounded-3xl p-6 border border-slate-100">
-                <h3 className="text-lg font-semibold text-slate-900">How it works</h3>
-                <ul className="mt-4 space-y-3 text-slate-600">
-                  <li>• Choose a therapy service, date, and a daytime slot between 9:00 AM and 6:00 PM.</li>
-                  <li>• Share your child’s needs so our team can prepare before confirming availability.</li>
-                  <li>• Once the request is reviewed, your appointment status will update in your account.</li>
-                </ul>
-                <p className="mt-4 text-sm text-slate-500">
-                  You must be logged in to request an appointment. If you are not signed in, you will be redirected to the login page.
-                </p>
-              </div>
+
             </section>
 
             <section className="space-y-6">
