@@ -35,7 +35,7 @@ export default function HomePage() {
     },
     {
       title: 'Build skills with care',
-      detail: 'Therapy sessions are guided by experts and shaped around each child’s learning style and pace.',
+      detail: 'Therapy sessions are guided by experts and shaped around each child\'s learning style and pace.',
     },
     {
       title: 'Celebrate steady progress',
@@ -46,223 +46,338 @@ export default function HomePage() {
   const valueIcons = ['💡', '📊', '🤝'];
 
   return (
-    <div className="bg-sky-50">
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0">
-          <Image
-            src={theme.hero.backgroundImage}
-            alt={theme.hero.alt}
-            fill
-            priority
-            className="object-cover object-center"
-          />
-          <div className="absolute inset-0 bg-slate-900/60" />
-        </div>
+    <main style={{ background: '#d4d0c8', minHeight: '100vh' }}>
+      {/* ═══════════════════════════════════════════════
+          HERO — styled as a Windows dialog/popup window
+          ═══════════════════════════════════════════════ */}
+      <section style={{ padding: '12px 8px', maxWidth: '960px', margin: '0 auto' }}>
+        <div className="win-raised" style={{ overflow: 'hidden' }}>
+          {/* Window title bar */}
+          <div className="win-titlebar">
+            <span>🌟 Welcome to Mindspring – Child Development &amp; Therapy</span>
+            <div style={{ display: 'flex', gap: '2px' }}>
+              {['_', '□', '✕'].map((l, i) => (
+                <span key={i} className="win-titlebar-btn">{l}</span>
+              ))}
+            </div>
+          </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 lg:py-40">
-          <div className="max-w-3xl text-white">
-            <span className="inline-block py-1 px-4 rounded-full bg-primary-500/20 text-primary-100 text-sm font-semibold tracking-widest uppercase mb-6">
-              {theme.hero.tagline}
-            </span>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold tracking-tight leading-tight mb-6">
-              {theme.hero.title}
-            </h1>
-            <p className="text-lg sm:text-xl text-slate-200 leading-relaxed max-w-2xl mb-10">
-              {theme.hero.subtitle}
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link
-                href={theme.hero.primaryCta.href}
-                className="btn btn-primary px-8 py-4"
-              >
-                {theme.hero.primaryCta.label}
-              </Link>
-              <Link
-                href={theme.hero.secondaryCta.href}
-                className="btn btn-secondary px-8 py-4"
-              >
-                {theme.hero.secondaryCta.label}
-              </Link>
+          {/* Hero content */}
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: '1fr 320px',
+              gap: '0',
+            }}
+          >
+            {/* Left: text */}
+            <div style={{ padding: '16px', background: '#d4d0c8' }}>
+              <p style={{ fontSize: '10px', color: '#000080', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '2px', marginBottom: '8px' }}>
+                ✦ {theme.hero.tagline} ✦
+              </p>
+              <h1 style={{ fontSize: '22px', fontWeight: 'bold', marginBottom: '10px', lineHeight: '1.3', fontFamily: "'Times New Roman', Times, serif" }}>
+                {theme.hero.title}
+              </h1>
+              <div className="win-separator" />
+              <p style={{ fontSize: '13px', marginBottom: '14px', lineHeight: '1.6', marginTop: '8px' }}>
+                {theme.hero.subtitle}
+              </p>
+              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                <Link href={theme.hero.primaryCta.href} className="btn btn-primary" style={{ border: '2px solid #000000' }}>
+                  {theme.hero.primaryCta.label}
+                </Link>
+                <Link href={theme.hero.secondaryCta.href} className="btn btn-secondary">
+                  {theme.hero.secondaryCta.label}
+                </Link>
+              </div>
+
+              {/* Fake "under construction" gif area */}
+              <div style={{ marginTop: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <span style={{ fontSize: '18px' }}>🚧</span>
+                <span style={{ fontSize: '11px', color: '#808080' }}>Site last updated: April 2026 | This page is best viewed at 800×600</span>
+              </div>
+            </div>
+
+            {/* Right: hero image in an inset frame */}
+            <div
+              className="win-inset"
+              style={{ position: 'relative', minHeight: '260px', overflow: 'hidden', borderTop: 'none', borderRight: 'none', borderBottom: 'none' }}
+            >
+              <Image
+                src={theme.hero.backgroundImage}
+                alt={theme.hero.alt}
+                fill
+                priority
+                className="object-cover object-center"
+              />
+              <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,80,0.08)' }} />
             </div>
           </div>
         </div>
       </section>
 
-      <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <span className="text-primary-600 font-bold tracking-widest uppercase text-xs mb-2 block">
-            {theme.collections.label}
-          </span>
-          <h2 className="text-4xl font-serif font-medium text-slate-900">
-            {theme.collections.heading}
-          </h2>
-        </div>
+      {/* ═══════════════════════════════════════
+          SERVICES — table-style card grid
+          ═══════════════════════════════════════ */}
+      <section style={{ maxWidth: '960px', margin: '0 auto', padding: '0 8px 16px' }}>
+        <div className="win-raised" style={{ overflow: 'hidden' }}>
+          <div className="win-titlebar">
+            <span>📁 {theme.collections.label} – {theme.collections.heading}</span>
+          </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {theme.collections.items.map((service) => (
-            <Link
-              key={service.title}
-              href={service.href}
-              className="group relative overflow-hidden rounded-3xl shadow-sm border border-slate-200 bg-white transition hover:-translate-y-1 hover:shadow-lg"
-            >
-              <div className="relative h-72 overflow-hidden">
-                <Image
-                  src={service.image}
-                  alt={service.title}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-              </div>
-              <div className="p-8">
-                <h3 className="text-2xl font-semibold text-slate-900 mb-3">{service.title}</h3>
-                <p className="text-slate-600 leading-relaxed mb-6">{service.subtitle}</p>
-                <span className="inline-flex items-center gap-2 text-primary-600 font-semibold uppercase tracking-widest text-sm">
-                  Learn more
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </span>
-              </div>
-            </Link>
-          ))}
+          {/* Fake tab strip */}
+          <div style={{ display: 'flex', borderBottom: '1px solid #808080', paddingTop: '6px', paddingLeft: '6px', background: '#d4d0c8' }}>
+            <span className="win-tab win-tab-active">All Services</span>
+            <span className="win-tab">Child Dev.</span>
+            <span className="win-tab">Coaching</span>
+            <span className="win-tab">Wellness</span>
+          </div>
+
+          <div style={{ padding: '12px', background: '#d4d0c8' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
+              {theme.collections.items.map((service) => (
+                <Link
+                  key={service.title}
+                  href={service.href}
+                  style={{ textDecoration: 'none', color: 'inherit' }}
+                >
+                  <div className="win-raised" style={{ overflow: 'hidden', cursor: 'pointer' }}>
+                    <div className="win-titlebar" style={{ fontSize: '11px', padding: '2px 6px' }}>
+                      <span>📂 {service.title}</span>
+                    </div>
+                    <div className="win-inset" style={{ position: 'relative', height: '140px', overflow: 'hidden' }}>
+                      <Image
+                        src={service.image}
+                        alt={service.title}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <div style={{ padding: '8px' }}>
+                      <p style={{ fontSize: '11px', color: '#404040', marginBottom: '6px' }}>{service.subtitle}</p>
+                      <span style={{ color: '#0000ff', fontSize: '11px', textDecoration: 'underline' }}>Learn more &gt;&gt;</span>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
-      <section className="relative overflow-hidden py-24">
-        <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-sky-100 to-transparent pointer-events-none" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] items-center">
-            <div>
-              <span className="text-primary-600 font-bold tracking-widest uppercase text-xs mb-3 inline-block">
-                What makes Mindspring different
-              </span>
-              <h2 className="text-4xl font-serif font-medium text-slate-900 mb-6">
+      {/* ═══════════════════════════════════════
+          WHAT MAKES US DIFFERENT + HOW IT WORKS
+          ═══════════════════════════════════════ */}
+      <section style={{ maxWidth: '960px', margin: '0 auto', padding: '0 8px 16px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+
+          {/* Left panel: Focus items */}
+          <div className="win-raised" style={{ overflow: 'hidden' }}>
+            <div className="win-titlebar">
+              <span>ℹ️ What Makes Mindspring Different</span>
+            </div>
+            <div style={{ padding: '10px', background: '#d4d0c8' }}>
+              <p style={{ fontSize: '12px', fontWeight: 'bold', color: '#000080', marginBottom: '6px' }}>
                 Child development therapy with clear, confident progress.
-              </h2>
-              <p className="max-w-2xl text-slate-600 leading-relaxed">
+              </p>
+              <p style={{ fontSize: '12px', color: '#404040', marginBottom: '10px', lineHeight: '1.5' }}>
                 Every child deserves the chance to thrive. Our approach blends expert assessment, playful skill-building and meaningful progress that parents can see.
               </p>
-
-              <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-1">
+              <div className="win-separator" />
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginTop: '8px' }}>
                 {focusItems.map((item) => (
-                  <div
-                    key={item.title}
-                    className="group rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm transition hover:-translate-y-2 hover:shadow-xl"
-                  >
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-50 text-sky-700 mb-5 transition group-hover:bg-sky-100">
-                      <span className="text-xl font-semibold">✓</span>
+                  <div key={item.title} className="win-inset" style={{ padding: '8px' }}>
+                    <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
+                      <span
+                        className="win-raised"
+                        style={{ width: '22px', height: '22px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '11px', fontWeight: 'bold', color: '#000080', flexShrink: 0 }}
+                      >
+                        ✓
+                      </span>
+                      <div>
+                        <p style={{ fontWeight: 'bold', fontSize: '12px', marginBottom: '2px' }}>{item.title}</p>
+                        <p style={{ fontSize: '11px', color: '#404040', lineHeight: '1.4' }}>{item.description}</p>
+                      </div>
                     </div>
-                    <h3 className="text-xl font-semibold text-slate-900 mb-3">{item.title}</h3>
-                    <p className="text-slate-600 leading-relaxed">{item.description}</p>
                   </div>
                 ))}
               </div>
             </div>
+          </div>
 
-            <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-sky-700 via-cyan-600 to-sky-800 p-8 text-white shadow-2xl">
-              <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.25),_transparent_35%)]" />
-              <div className="relative">
-                <p className="text-sm uppercase tracking-[0.35em] text-sky-100 mb-4">How it works</p>
-                <h3 className="text-3xl font-serif font-semibold mb-8">A simple path from assessment to confidence.</h3>
-                <div className="space-y-6">
-                  {processSteps.map((step, index) => (
-                    <div key={step.title} className="flex gap-4">
-                      <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white text-slate-900 font-bold text-xl">
-                        {index + 1}
-                      </div>
-                      <div>
-                        <h4 className="text-lg font-semibold">{step.title}</h4>
-                        <p className="mt-2 text-slate-200 leading-relaxed">{step.detail}</p>
-                      </div>
+          {/* Right panel: Process steps */}
+          <div className="win-raised" style={{ overflow: 'hidden' }}>
+            <div className="win-titlebar">
+              <span>📋 How It Works – Step-by-Step Wizard</span>
+            </div>
+            <div style={{ padding: '10px', background: '#d4d0c8' }}>
+              <p style={{ fontSize: '12px', fontWeight: 'bold', color: '#000080', marginBottom: '8px' }}>
+                A simple path from assessment to confidence.
+              </p>
+
+              {processSteps.map((step, index) => (
+                <div key={step.title} style={{ marginBottom: '10px' }}>
+                  <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
+                    <span
+                      className="win-raised"
+                      style={{ width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', fontSize: '14px', flexShrink: 0, color: '#000080', fontFamily: "'Times New Roman', serif" }}
+                    >
+                      {index + 1}
+                    </span>
+                    <div className="win-inset" style={{ flex: 1, padding: '6px 8px' }}>
+                      <p style={{ fontWeight: 'bold', fontSize: '12px', marginBottom: '2px' }}>{step.title}</p>
+                      <p style={{ fontSize: '11px', color: '#404040', lineHeight: '1.4' }}>{step.detail}</p>
                     </div>
-                  ))}
+                  </div>
+                  {index < processSteps.length - 1 && (
+                    <div style={{ textAlign: 'center', fontSize: '14px', marginTop: '4px', color: '#808080' }}>▼</div>
+                  )}
                 </div>
-              </div>
-              <div className="mt-10 rounded-[2rem] bg-white/10 p-6 ring-1 ring-white/20">
-                <p className="text-sm uppercase tracking-[0.35em] text-sky-100 mb-3">Practice focus</p>
-                <p className="text-sm text-slate-200 leading-relaxed">
+              ))}
+
+              <div className="win-separator" />
+              <div className="win-inset" style={{ padding: '8px', marginTop: '8px' }}>
+                <p style={{ fontSize: '11px', fontWeight: 'bold', color: '#000080', marginBottom: '4px' }}>Practice focus:</p>
+                <p style={{ fontSize: '11px', color: '#404040', lineHeight: '1.4' }}>
                   Progress is real when children feel safe, understood, and supported by a plan that keeps them moving ahead.
                 </p>
               </div>
+
+              {/* Fake progress bar */}
+              <div style={{ marginTop: '10px' }}>
+                <p style={{ fontSize: '11px', marginBottom: '4px' }}>Overall progress: 78%</p>
+                <div className="win-progress-track">
+                  <div className="win-progress-fill" style={{ width: '78%' }} />
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="bg-white py-24 border-y border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <span className="text-primary-600 font-bold tracking-widest uppercase text-xs mb-2 block">
-              Why Parents Choose Mindspring
-            </span>
-            <h2 className="text-4xl font-serif font-medium text-slate-900">
+      {/* ═══════════════════════════════════════
+          VALUES
+          ═══════════════════════════════════════ */}
+      <section style={{ maxWidth: '960px', margin: '0 auto', padding: '0 8px 16px' }}>
+        <div className="win-raised" style={{ overflow: 'hidden' }}>
+          <div className="win-titlebar">
+            <span>⭐ Why Parents Choose Mindspring</span>
+          </div>
+          <div style={{ padding: '12px', background: '#d4d0c8' }}>
+            <p style={{ fontSize: '14px', fontWeight: 'bold', textAlign: 'center', marginBottom: '12px', fontFamily: "'Times New Roman', serif" }}>
               A calm, practical approach to emotional growth
-            </h2>
-          </div>
-
-          <div className="grid gap-8 md:grid-cols-3">
-            {theme.values.map((value, index) => (
-              <div key={value.title} className="rounded-3xl border border-slate-200 bg-slate-50 p-10 text-center">
-                <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-primary-50 text-primary-600">
-                  <span className="text-4xl leading-none">{valueIcons[index]}</span>
+            </p>
+            <div className="win-separator" style={{ marginBottom: '12px' }} />
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
+              {theme.values.map((value, index) => (
+                <div key={value.title} className="win-inset" style={{ padding: '10px', textAlign: 'center' }}>
+                  <div
+                    className="win-raised"
+                    style={{
+                      width: '40px',
+                      height: '40px',
+                      margin: '0 auto 8px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '22px',
+                    }}
+                  >
+                    {valueIcons[index]}
+                  </div>
+                  <p style={{ fontWeight: 'bold', fontSize: '12px', marginBottom: '4px' }}>{value.title}</p>
+                  <p style={{ fontSize: '11px', color: '#404040', lineHeight: '1.4' }}>{value.description}</p>
                 </div>
-                <h3 className="text-xl font-semibold text-slate-900 mb-3">{value.title}</h3>
-                <p className="text-slate-600 leading-relaxed">{value.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <span className="text-primary-600 font-bold tracking-widest uppercase text-xs mb-2 block">Stories of growth</span>
-          <h2 className="text-4xl font-serif font-medium text-slate-900">Trusted support from parents and children</h2>
-        </div>
-
-        <div className="grid gap-8 md:grid-cols-3">
-          {theme.testimonials.map((testimonial) => (
-            <div key={testimonial.name} className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
-              <div className="flex items-center gap-4 mb-6">
-                <div className="relative h-14 w-14 overflow-hidden rounded-full bg-slate-100">
-                  <Image src={testimonial.image} alt={testimonial.name} fill className="object-cover" />
-                </div>
-                <div>
-                  <p className="font-semibold text-slate-900">{testimonial.name}</p>
-                  <p className="text-sm text-slate-500">{testimonial.location}</p>
-                </div>
-              </div>
-              <p className="text-slate-700 leading-relaxed">{testimonial.quote}</p>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
       </section>
 
-      <section className="relative py-24 bg-slate-900 text-white overflow-hidden">
-        <div className="absolute inset-0 opacity-40">
-          <Image
-            src={theme.about.hero.backgroundImage}
-            alt={theme.about.hero.alt}
-            fill
-            className="object-cover"
-            priority
-          />
-        </div>
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <span className="inline-block py-1 px-3 rounded-full bg-white/10 backdrop-blur border border-white/20 text-xs font-bold tracking-widest uppercase mb-8">
-            {theme.about.hero.tagline}
-          </span>
-          <h2 className="text-3xl md:text-5xl font-serif font-medium mb-8 leading-tight text-white/90">
-            {theme.about.hero.title}
-          </h2>
-          <p className="max-w-2xl mx-auto text-lg text-slate-300 mb-10 leading-relaxed">
-            {theme.about.story.paragraphs.join(' ')}
-          </p>
-          <Link href="/about" className="btn btn-primary bg-white text-slate-900 hover:bg-slate-100 border-none inline-flex">
-            Read Our Full Story
-          </Link>
+      {/* ═══════════════════════════════════════
+          TESTIMONIALS
+          ═══════════════════════════════════════ */}
+      <section style={{ maxWidth: '960px', margin: '0 auto', padding: '0 8px 16px' }}>
+        <div className="win-raised" style={{ overflow: 'hidden' }}>
+          <div className="win-titlebar">
+            <span>💬 Stories of Growth – Trusted Support from Parents and Children</span>
+          </div>
+          <div style={{ padding: '12px', background: '#d4d0c8' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
+              {theme.testimonials.map((testimonial) => (
+                <div key={testimonial.name} className="win-inset" style={{ padding: '10px' }}>
+                  {/* Quote icon */}
+                  <div style={{ fontSize: '24px', color: '#000080', marginBottom: '6px', lineHeight: 1 }}>&quot;</div>
+                  <p style={{ fontSize: '12px', lineHeight: '1.5', color: '#000000', marginBottom: '8px', fontStyle: 'italic' }}>
+                    {testimonial.quote}
+                  </p>
+                  <div className="win-separator" />
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '6px' }}>
+                    <div
+                      className="win-raised"
+                      style={{ width: '32px', height: '32px', overflow: 'hidden', position: 'relative', flexShrink: 0 }}
+                    >
+                      <Image src={testimonial.image} alt={testimonial.name} fill className="object-cover" />
+                    </div>
+                    <div>
+                      <p style={{ fontWeight: 'bold', fontSize: '11px' }}>{testimonial.name}</p>
+                      <p style={{ fontSize: '10px', color: '#808080' }}>{testimonial.location}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
-    </div>
+
+      {/* ═══════════════════════════════════════
+          CTA / ABOUT SECTION
+          ═══════════════════════════════════════ */}
+      <section style={{ maxWidth: '960px', margin: '0 auto', padding: '0 8px 20px' }}>
+        <div className="win-raised" style={{ overflow: 'hidden' }}>
+          <div className="win-titlebar">
+            <span>🏥 {theme.about.hero.tagline} – Our Mission</span>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 320px', gap: '0' }}>
+            <div style={{ padding: '16px', background: '#d4d0c8' }}>
+              <p style={{ fontSize: '10px', color: '#000080', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '2px', marginBottom: '8px' }}>
+                {theme.about.hero.tagline}
+              </p>
+              <h2 style={{ fontSize: '18px', fontWeight: 'bold', marginBottom: '10px', lineHeight: '1.3', fontFamily: "'Times New Roman', Times, serif" }}>
+                {theme.about.hero.title}
+              </h2>
+              <div className="win-separator" />
+              <p style={{ fontSize: '12px', marginTop: '10px', marginBottom: '8px', lineHeight: '1.6', color: '#404040' }}>
+                {theme.about.story.paragraphs[0]}
+              </p>
+              <p style={{ fontSize: '12px', marginBottom: '14px', lineHeight: '1.6', color: '#404040' }}>
+                {theme.about.story.paragraphs[1]}
+              </p>
+              <div style={{ display: 'flex', gap: '6px' }}>
+                <Link href="/about" className="btn btn-primary" style={{ border: '2px solid #000000', fontSize: '12px' }}>
+                  Read Our Full Story
+                </Link>
+                <Link href="/contact" className="btn btn-secondary" style={{ fontSize: '12px' }}>
+                  Contact Us
+                </Link>
+              </div>
+            </div>
+
+            {/* Image panel */}
+            <div className="win-inset" style={{ position: 'relative', overflow: 'hidden', borderTop: 'none', borderRight: 'none', borderBottom: 'none' }}>
+              <Image
+                src={theme.about.hero.backgroundImage}
+                alt={theme.about.hero.alt}
+                fill
+                className="object-cover"
+                priority
+              />
+              <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,50,0.12)' }} />
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
   );
 }
