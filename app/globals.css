@@ -4,77 +4,423 @@
 
 @layer base {
   :root {
-    --font-serif: 'Playfair Display', Georgia, serif;
-    --font-sans: 'Inter', system-ui, sans-serif;
+    /* Windows 2000 System Color Palette */
+    --color-win-gray: #d4d0c8;
+    --color-win-gray-dark: #808080;
+    --color-win-gray-light: #f0ede4;
+    --color-win-white: #ffffff;
+    --color-win-black: #000000;
+    --color-win-navy: #000080;
+    --color-win-titlebar-start: #0a246a;
+    --color-win-titlebar-end: #a6caf0;
+    --color-win-blue-link: #0000ff;
+    --color-win-link-visited: #800080;
+    --color-win-highlight: #000080;
+    --color-win-highlight-text: #ffffff;
+    --color-win-btn-face: #d4d0c8;
+    --color-win-btn-shadow: #808080;
+    --color-win-btn-dark-shadow: #404040;
+    --color-win-btn-highlight: #ffffff;
+    --color-win-btn-light: #ececec;
+    --color-win-inset-bg: #ffffff;
+
+    /* Semantic tokens */
+    --background: var(--color-win-gray);
+    --foreground: var(--color-win-black);
+    --primary: var(--color-win-navy);
+    --primary-foreground: var(--color-win-white);
+    --muted: var(--color-win-gray-dark);
+    --border: var(--color-win-gray-dark);
+    --radius: 0rem;
+
+    --font-sans: Tahoma, 'MS Sans Serif', Arial, sans-serif;
+    --font-serif: 'Times New Roman', Times, serif;
+    --font-mono: 'Courier New', Courier, monospace;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: auto;
   }
 
   body {
-    @apply bg-sky-50 text-slate-900 antialiased font-sans selection:bg-sky-200 selection:text-sky-900;
+    font-family: Tahoma, 'MS Sans Serif', Arial, sans-serif;
+    background-color: var(--color-win-gray);
+    color: var(--color-win-black);
+    font-size: 13px;
+    line-height: 1.4;
+    /* Windows 2000 tiled background pattern */
+    background-image: url("data:image/svg+xml,%3Csvg width='4' height='4' viewBox='0 0 4 4' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='2' height='2' fill='%23c8c4bc'/%3E%3Crect x='2' y='2' width='2' height='2' fill='%23c8c4bc'/%3E%3C/svg%3E");
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-serif tracking-tight text-stone-900;
+    font-family: Tahoma, 'MS Sans Serif', Arial, sans-serif;
+    font-weight: bold;
+    color: var(--color-win-black);
+  }
+
+  a {
+    color: var(--color-win-blue-link);
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  a:visited {
+    color: var(--color-win-link-visited);
+  }
+
+  a:hover {
+    color: var(--color-win-navy);
   }
 }
 
 @layer components {
-  .btn {
-    @apply px-6 py-3 rounded-full font-medium transition-all duration-300 flex items-center justify-center gap-2;
-  }
-  
-  .btn-primary {
-    @apply bg-sky-600 text-white hover:bg-sky-700 hover:shadow-lg active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
-  }
-  
-  .btn-secondary {
-    @apply bg-white border border-slate-200 text-slate-900 hover:bg-sky-50 hover:border-sky-200 active:scale-95;
+  /* ── Windows 2000 "raised" 3D border ── */
+  .win-raised {
+    border-style: solid;
+    border-width: 2px;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    border-top-color: #ffffff;
+    border-left-color: #ffffff;
+    border-right-color: #404040;
+    border-bottom-color: #404040;
+    box-shadow: inset 1px 1px 0 #ececec, inset -1px -1px 0 #808080;
+    background-color: var(--color-win-gray);
   }
 
-  .btn-accent {
-    @apply bg-primary-500 text-white hover:bg-primary-600 shadow-md hover:shadow-primary-200/50 active:scale-95;
+  /* ── Windows 2000 "sunken/inset" panel ── */
+  .win-inset {
+    border-style: solid;
+    border-width: 2px;
+    border-top-color: #808080;
+    border-left-color: #808080;
+    border-right-color: #ffffff;
+    border-bottom-color: #ffffff;
+    box-shadow: inset 1px 1px 0 #404040, inset -1px -1px 0 #ececec;
+    background-color: var(--color-win-white);
   }
-  
+
+  /* ── Classic Windows button ── */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-family: Tahoma, 'MS Sans Serif', Arial, sans-serif;
+    font-size: 13px;
+    font-weight: normal;
+    padding: 4px 16px;
+    min-height: 26px;
+    background-color: var(--color-win-gray);
+    color: var(--color-win-black);
+    cursor: pointer;
+    border-style: solid;
+    border-width: 2px;
+    border-top-color: #ffffff;
+    border-left-color: #ffffff;
+    border-right-color: #404040;
+    border-bottom-color: #404040;
+    box-shadow: inset 1px 1px 0 #ececec, inset -1px -1px 0 #808080;
+    text-decoration: none;
+    user-select: none;
+    white-space: nowrap;
+    border-radius: 0;
+  }
+
+  .btn:hover {
+    background-color: #d4d0c8;
+    color: var(--color-win-black);
+    text-decoration: none;
+  }
+
+  .btn:active,
+  .btn-active {
+    border-top-color: #404040;
+    border-left-color: #404040;
+    border-right-color: #ffffff;
+    border-bottom-color: #ffffff;
+    box-shadow: inset 1px 1px 0 #808080, inset -1px -1px 0 #ececec;
+    padding: 5px 15px 3px 17px;
+  }
+
+  .btn-primary {
+    background-color: var(--color-win-gray);
+    color: var(--color-win-black);
+    border: 2px solid var(--color-win-black);
+    box-shadow: inset 1px 1px 0 #ffffff, inset -1px -1px 0 #808080;
+  }
+
+  .btn-primary:hover {
+    background-color: #c0bdb5;
+  }
+
+  .btn-secondary {
+    background-color: var(--color-win-gray);
+    color: var(--color-win-black);
+  }
+
+  /* ── Window title bar ── */
+  .win-titlebar {
+    background: linear-gradient(to right, #0a246a 0%, #1264d3 60%, #a6caf0 100%);
+    color: #ffffff;
+    font-family: Tahoma, 'MS Sans Serif', Arial, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 3px 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 22px;
+    user-select: none;
+  }
+
+  .win-titlebar-btn {
+    width: 16px;
+    height: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-win-gray);
+    color: var(--color-win-black);
+    font-size: 10px;
+    font-weight: bold;
+    border-style: solid;
+    border-width: 2px;
+    border-top-color: #ffffff;
+    border-left-color: #ffffff;
+    border-right-color: #404040;
+    border-bottom-color: #404040;
+    cursor: pointer;
+    line-height: 1;
+    margin-left: 2px;
+    text-decoration: none;
+  }
+
+  /* ── Menu bar ── */
+  .win-menubar {
+    background-color: var(--color-win-gray);
+    border-bottom: 1px solid #808080;
+    font-size: 13px;
+    display: flex;
+    align-items: stretch;
+    padding: 1px 2px;
+    gap: 0;
+  }
+
+  .win-menuitem {
+    padding: 2px 8px;
+    cursor: pointer;
+    color: var(--color-win-black);
+    text-decoration: none;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+  }
+
+  .win-menuitem:hover {
+    background-color: var(--color-win-navy);
+    color: #ffffff;
+    text-decoration: none;
+  }
+
+  /* ── Form inputs ── */
   .input {
-    @apply w-full px-4 py-3 border border-stone-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-primary-400/50 focus:border-primary-400 transition-all duration-200 placeholder:text-stone-400;
+    border-style: solid;
+    border-width: 2px;
+    border-top-color: #808080;
+    border-left-color: #808080;
+    border-right-color: #ffffff;
+    border-bottom-color: #ffffff;
+    box-shadow: inset 1px 1px 0 #404040;
+    background-color: var(--color-win-white);
+    color: var(--color-win-black);
+    font-family: Tahoma, 'MS Sans Serif', Arial, sans-serif;
+    font-size: 13px;
+    padding: 3px 6px;
+    outline: none;
+    border-radius: 0;
+    width: 100%;
   }
-  
+
+  .input:focus {
+    outline: 1px dotted var(--color-win-black);
+    outline-offset: -3px;
+  }
+
+  /* ── Window panel / card ── */
   .card {
-    @apply bg-white rounded-xl shadow-sm border border-stone-100 hover:shadow-md transition-shadow duration-300 overflow-hidden;
+    background-color: var(--color-win-gray);
+    border-style: solid;
+    border-width: 2px;
+    border-top-color: #ffffff;
+    border-left-color: #ffffff;
+    border-right-color: #404040;
+    border-bottom-color: #404040;
+    box-shadow: inset 1px 1px 0 #ececec, inset -1px -1px 0 #808080;
+    border-radius: 0;
+    overflow: hidden;
+  }
+
+  /* ── Taskbar ── */
+  .win-taskbar {
+    background-color: var(--color-win-gray);
+    border-top: 2px solid #ffffff;
+    padding: 2px 4px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    min-height: 30px;
+  }
+
+  .win-start-btn {
+    background: linear-gradient(to right, var(--color-win-gray) 0%, #c8c4bc 100%);
+    font-weight: bold;
+    font-size: 12px;
+    padding: 2px 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    border-style: solid;
+    border-width: 2px;
+    border-top-color: #ffffff;
+    border-left-color: #ffffff;
+    border-right-color: #404040;
+    border-bottom-color: #404040;
+    cursor: pointer;
+    font-family: Tahoma, 'MS Sans Serif', Arial, sans-serif;
+  }
+
+  /* ── Separator ── */
+  .win-separator {
+    height: 2px;
+    border-top: 1px solid #808080;
+    border-bottom: 1px solid #ffffff;
+    margin: 4px 0;
+  }
+
+  /* ── Marquee banner ── */
+  .win-marquee-wrap {
+    background-color: var(--color-win-white);
+    border-style: solid;
+    border-width: 2px;
+    border-top-color: #808080;
+    border-left-color: #808080;
+    border-right-color: #ffffff;
+    border-bottom-color: #ffffff;
+    overflow: hidden;
+    padding: 4px 0;
   }
 
   .container-custom {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 8px;
+  }
+
+  /* ── Tab strip ── */
+  .win-tab {
+    padding: 3px 12px;
+    background-color: var(--color-win-gray);
+    border-style: solid;
+    border-width: 1px;
+    border-color: #808080;
+    margin-right: -1px;
+    cursor: pointer;
+    font-size: 12px;
+    position: relative;
+    top: 1px;
+  }
+
+  .win-tab-active {
+    background-color: var(--color-win-white);
+    border-bottom-color: var(--color-win-white);
+    z-index: 1;
+    font-weight: bold;
+  }
+
+  .win-tab-panel {
+    background-color: var(--color-win-white);
+    border: 1px solid #808080;
+    padding: 12px;
+  }
+
+  /* ── Progress bar ── */
+  .win-progress-track {
+    height: 18px;
+    background-color: var(--color-win-white);
+    border-style: solid;
+    border-width: 2px;
+    border-top-color: #808080;
+    border-left-color: #808080;
+    border-right-color: #ffffff;
+    border-bottom-color: #ffffff;
+    overflow: hidden;
+  }
+
+  .win-progress-fill {
+    height: 100%;
+    background: repeating-linear-gradient(
+      to right,
+      #000080 0px,
+      #000080 8px,
+      #ffffff 8px,
+      #ffffff 9px
+    );
   }
 }
 
 @layer utilities {
-  .lf-particle {
-    position: absolute;
-    border-radius: 9999px;
-    background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0) 60%);
-    animation-name: lf-float;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    opacity: 0.7;
-  }
+  .text-win-blue { color: var(--color-win-navy); }
+  .bg-win-gray { background-color: var(--color-win-gray); }
+  .bg-win-white { background-color: var(--color-win-white); }
+  .font-win { font-family: Tahoma, 'MS Sans Serif', Arial, sans-serif; }
 }
 
-@keyframes lf-float {
-  0% { transform: translateY(0) translateX(0); opacity: 0.6; }
-  50% { opacity: 1; }
-  100% { transform: translateY(-100px) translateX(40px); opacity: 0.3; }
+/* Marquee animation */
+@keyframes marquee {
+  from { transform: translateX(100%); }
+  to { transform: translateX(-100%); }
 }
 
-/* Custom scrollbar for webkit */
+.animate-marquee {
+  animation: marquee 22s linear infinite;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+/* IE6-era scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 16px;
+  height: 16px;
 }
-
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: var(--color-win-gray);
 }
-
 ::-webkit-scrollbar-thumb {
-  @apply bg-stone-300 rounded-full hover:bg-stone-400 transition-colors;
+  background: var(--color-win-gray);
+  border-style: solid;
+  border-width: 2px;
+  border-top-color: #ffffff;
+  border-left-color: #ffffff;
+  border-right-color: #404040;
+  border-bottom-color: #404040;
+  border-radius: 0;
 }
-
+::-webkit-scrollbar-corner {
+  background: var(--color-win-gray);
+}
+::-webkit-scrollbar-button {
+  background: var(--color-win-gray);
+  border-style: solid;
+  border-width: 2px;
+  border-top-color: #ffffff;
+  border-left-color: #ffffff;
+  border-right-color: #404040;
+  border-bottom-color: #404040;
+  display: block;
+  height: 16px;
+  width: 16px;
+}

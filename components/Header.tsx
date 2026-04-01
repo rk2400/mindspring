@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Link from 'next/link';
 import { useUser } from '@/lib/contexts/UserContext';
@@ -9,10 +9,27 @@ export default function Header() {
   const { user, loading, logout } = useUser();
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [time, setTime] = useState('');
 
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
+
+  useEffect(() => {
+    const tick = () => {
+      const now = new Date();
+      setTime(
+        now.toLocaleTimeString('en-US', {
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: true,
+        })
+      );
+    };
+    tick();
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
+  }, []);
 
   const handleLogout = async () => {
     await logout();
@@ -28,127 +45,137 @@ export default function Header() {
   ];
 
   return (
-    <div className="bg-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200 transition-all duration-300">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
-            <div className="flex items-center gap-6">
-              <button className="md:hidden p-2 rounded-full hover:bg-slate-100 transition-colors" onClick={() => setOpen(!open)} aria-label="menu">
-                <svg className="w-6 h-6 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              </button>
+    <header>
+      {/* ── Marquee announcement bar ── */}
+      <div className="win-marquee-wrap" style={{ borderBottom: 'none' }}>
+        <span className="animate-marquee text-xs" style={{ color: '#000080', fontWeight: 'bold' }}>
+          ★ Welcome to Mindspring Child Development &amp; Therapy ★ &nbsp;&nbsp;&nbsp;
+          Expert child therapy, parent coaching, and developmental support in Vaishali, Ghaziabad &nbsp;&nbsp;&nbsp;
+          ★ Book your free consultation today! ★ &nbsp;&nbsp;&nbsp;
+          Phone: +91 9971996493 | +91 9266561109 &nbsp;&nbsp;&nbsp;
+          ★ Best viewed in Internet Explorer 6.0 at 800×600 resolution ★ &nbsp;&nbsp;&nbsp;
+        </span>
+      </div>
 
-              <Link href="/" className="text-3xl font-serif font-bold text-slate-900 tracking-tight hover:opacity-80 transition-opacity">
-                Mindspring
-              </Link>
-
-              <nav className="hidden md:flex items-center gap-8">
-                {navLinks.map((link) => (
-                  <Link
-                    key={link.name}
-                    href={link.href}
-                    className="text-sm font-medium uppercase tracking-widest text-slate-500 hover:text-primary-600 transition-colors"
-                  >
-                    {link.name}
-                  </Link>
-                ))}
-              </nav>
-            </div>
-
-            <div className="flex items-center gap-5">
-              {loading ? (
-                <div className="w-24 h-6 bg-slate-100 animate-pulse rounded-full"></div>
-              ) : user ? (
-                <>
-                  <Link
-                    href="/profile"
-                    className="text-sm font-medium text-slate-600 hover:text-primary-600 transition-colors"
-                  >
-                    My Profile
-                  </Link>
-                  {user.isAdmin && (
-                    <Link
-                      href="/admin/dashboard"
-                      className="text-xs font-bold uppercase tracking-wider text-primary-600 hover:text-primary-700 border border-primary-200 px-3 py-1 rounded-full hover:bg-primary-50 transition-all"
-                    >
-                      Admin
-                    </Link>
-                  )}
-                  <button
-                    onClick={handleLogout}
-                    className="text-sm font-medium text-slate-500 hover:text-slate-800 transition-colors"
-                  >
-                    Sign Out
-                  </button>
-                </>
-              ) : (
-                <div className="hidden md:flex items-center gap-4">
-                  <Link href="/login" className="text-sm font-medium text-slate-600 hover:text-primary-600 transition-colors">
-                    Log In
-                  </Link>
-                  <Link href="/signup" className="btn btn-primary text-sm px-5 py-2">
-                    Sign Up
-                  </Link>
-                </div>
-              )}
-            </div>
-          </div>
+      {/* ── Browser chrome / window title bar ── */}
+      <div
+        style={{
+          background: 'linear-gradient(to right, #0a246a 0%, #1264d3 60%, #a6caf0 100%)',
+          padding: '3px 6px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          minHeight: '22px',
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+          {/* Fake IE globe icon */}
+          <span style={{ fontSize: '14px' }}>🌐</span>
+          <span
+            style={{
+              color: '#ffffff',
+              fontFamily: "Tahoma, 'MS Sans Serif', Arial, sans-serif",
+              fontSize: '12px',
+              fontWeight: 'bold',
+            }}
+          >
+            Mindspring – Child Development &amp; Therapy – Microsoft Internet Explorer
+          </span>
         </div>
+        <div style={{ display: 'flex', gap: '2px' }}>
+          {['_', '□', '✕'].map((label, i) => (
+            <span
+              key={i}
+              className="win-titlebar-btn"
+              style={{
+                fontFamily: "Marlett, Tahoma, Arial, sans-serif",
+                fontSize: i === 2 ? '9px' : '10px',
+                fontWeight: 'bold',
+              }}
+            >
+              {label}
+            </span>
+          ))}
+        </div>
+      </div>
 
-        {open && (
-          <div className="md:hidden border-t border-slate-200 bg-white py-4">
-            <nav className="flex flex-col gap-1 px-4">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  onClick={() => setOpen(false)}
-                  className="block px-4 py-3 rounded-lg hover:bg-slate-50 text-slate-600 font-medium"
-                >
-                  {link.name}
-                </Link>
-              ))}
-              <div className="border-t border-slate-100 my-2" />
-              {user ? (
-                <>
-                  <Link
-                    href="/profile"
-                    onClick={() => setOpen(false)}
-                    className="block px-4 py-3 rounded-lg hover:bg-slate-50 text-slate-600 font-medium"
-                  >
-                    My Profile
-                  </Link>
-                  <button
-                    onClick={() => {
-                      setOpen(false);
-                      handleLogout();
-                    }}
-                    className="w-full text-left px-4 py-3 rounded-lg hover:bg-slate-50 text-slate-600 font-medium"
-                  >
-                    Sign Out
-                  </button>
-                </>
-              ) : (
-                <>
-                  <Link
-                    href="/login"
-                    onClick={() => setOpen(false)}
-                    className="block px-4 py-3 rounded-lg hover:bg-slate-50 text-slate-600 font-medium"
-                  >
-                    Log In
-                  </Link>
-                  <Link
-                    href="/signup"
-                    onClick={() => setOpen(false)}
-                    className="block px-4 py-3 rounded-lg hover:bg-slate-50 text-slate-600 font-medium"
-                  >
-                    Sign Up
-                  </Link>
-                </>
-              )}
-            </nav>
+      {/* ── IE6 toolbar ── */}
+      <div
+        className="win-raised"
+        style={{ padding: '3px 4px', borderTop: 'none', display: 'flex', alignItems: 'center', gap: '4px', flexWrap: 'wrap' }}
+      >
+        <button className="btn" style={{ padding: '2px 10px', fontSize: '12px' }}>◀ Back</button>
+        <button className="btn" style={{ padding: '2px 10px', fontSize: '12px' }}>▶ Forward</button>
+        <button className="btn" style={{ padding: '2px 10px', fontSize: '12px' }}>✕ Stop</button>
+        <button className="btn" style={{ padding: '2px 10px', fontSize: '12px' }}>↻ Refresh</button>
+        <button className="btn" style={{ padding: '2px 10px', fontSize: '12px' }}>🏠 Home</button>
+        <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: '4px', minWidth: '200px' }}>
+          <span style={{ fontSize: '12px', whiteSpace: 'nowrap' }}>Address</span>
+          <div className="win-inset" style={{ flex: 1, padding: '2px 6px', fontSize: '12px', fontFamily: 'monospace', minWidth: 0 }}>
+            http://www.mindspring.in/
           </div>
+          <button className="btn" style={{ padding: '2px 14px', fontSize: '12px' }}>Go</button>
+        </div>
+      </div>
+
+      {/* ── Menu bar (nav links) ── */}
+      <div className="win-menubar">
+        {navLinks.map((link) => (
+          <Link
+            key={link.name}
+            href={link.href}
+            className="win-menuitem"
+          >
+            <u style={{ textDecoration: link.name.charAt(0) !== '' ? 'none' : 'underline' }}>
+              {link.name.charAt(0)}
+            </u>
+            {link.name.slice(1)}
+          </Link>
+        ))}
+
+        <div style={{ flex: 1 }} />
+
+        {loading ? (
+          <span className="win-menuitem" style={{ color: '#808080', fontSize: '11px' }}>Loading...</span>
+        ) : user ? (
+          <>
+            <Link href="/profile" className="win-menuitem">My Profile</Link>
+            {user.isAdmin && (
+              <Link href="/admin/dashboard" className="win-menuitem" style={{ fontWeight: 'bold' }}>
+                Admin
+              </Link>
+            )}
+            <button
+              onClick={handleLogout}
+              className="win-menuitem"
+              style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: '13px' }}
+            >
+              Sign Out
+            </button>
+          </>
+        ) : (
+          <>
+            <Link href="/login" className="win-menuitem">Log In</Link>
+            <Link href="/signup" className="win-menuitem" style={{ fontWeight: 'bold' }}>Sign Up</Link>
+          </>
         )}
       </div>
+
+      {/* ── Status bar ── */}
+      <div
+        style={{
+          background: '#d4d0c8',
+          borderTop: '1px solid #808080',
+          padding: '1px 4px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          fontSize: '11px',
+        }}
+      >
+        <span style={{ flex: 1 }}>✅ Done</span>
+        <span>🌐 Internet zone</span>
+      </div>
+    </header>
   );
 }

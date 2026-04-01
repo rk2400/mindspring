@@ -1,13 +1,10 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import './globals.css';
 import { Toaster } from 'react-hot-toast';
 import { UserProvider } from '@/lib/contexts/UserContext';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { siteConfig } from '@/config/site-config';
-
-const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: `${siteConfig.name} – ${siteConfig.description}`,
@@ -38,7 +35,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body style={{ fontFamily: "Tahoma, 'MS Sans Serif', Arial, sans-serif" }}>
         <UserProvider>
           <Header />
           {children}
@@ -48,28 +45,20 @@ export default function RootLayout({
             toastOptions={{
               duration: 5000,
               style: {
-                borderRadius: '20px',
-                background: '#ffffff',
-                color: '#111827',
-                boxShadow: '0 24px 70px rgba(15, 23, 42, 0.18)',
-                border: '1px solid rgba(148, 163, 184, 0.24)',
-                padding: '18px 22px',
-                minWidth: '320px',
-                maxWidth: '460px',
-                fontSize: '15px',
-                lineHeight: '1.65',
-              },
-              success: {
-                iconTheme: {
-                  primary: '#16a34a',
-                  secondary: '#ffffff',
-                },
-              },
-              error: {
-                iconTheme: {
-                  primary: '#dc2626',
-                  secondary: '#ffffff',
-                },
+                borderRadius: '0',
+                background: '#d4d0c8',
+                color: '#000000',
+                boxShadow: '2px 2px 0 #808080',
+                border: '2px solid',
+                borderTopColor: '#ffffff',
+                borderLeftColor: '#ffffff',
+                borderRightColor: '#404040',
+                borderBottomColor: '#404040',
+                padding: '8px 12px',
+                minWidth: '240px',
+                maxWidth: '400px',
+                fontSize: '13px',
+                fontFamily: "Tahoma, 'MS Sans Serif', Arial, sans-serif",
               },
             }}
           />
@@ -78,4 +67,3 @@ export default function RootLayout({
     </html>
   );
 }
-
