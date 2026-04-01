@@ -10,6 +10,41 @@ export const metadata: Metadata = {
 };
 
 export default function HomePage() {
+  const focusItems = [
+    {
+      title: 'Child-first therapy',
+      description:
+        'Every session is designed to support speech, attention, behaviour, and sensory development with practical next steps.',
+    },
+    {
+      title: 'Evidence-based progress',
+      description:
+        'Assessment-led plans help children move from challenge to confidence with clear milestones and encouragement.',
+    },
+    {
+      title: 'Engaging learning tools',
+      description:
+        'Playful, supportive activities make each therapy session feel meaningful and easy to bring into daily life.',
+    },
+  ];
+
+  const processSteps = [
+    {
+      title: 'Assess, understand, plan',
+      detail: 'We begin with a friendly assessment that identifies strengths, needs, and a practical path forward.',
+    },
+    {
+      title: 'Build skills with care',
+      detail: 'Therapy sessions are guided by experts and shaped around each child’s learning style and pace.',
+    },
+    {
+      title: 'Celebrate steady progress',
+      detail: 'Every small win is tracked, shared, and connected to confidence at home, school, and play.',
+    },
+  ];
+
+  const valueIcons = ['💡', '📊', '🤝'];
+
   return (
     <div className="bg-sky-50">
       <section className="relative overflow-hidden">
@@ -93,11 +128,72 @@ export default function HomePage() {
         </div>
       </section>
 
+      <section className="relative overflow-hidden py-24">
+        <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-sky-100 to-transparent pointer-events-none" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] items-center">
+            <div>
+              <span className="text-primary-600 font-bold tracking-widest uppercase text-xs mb-3 inline-block">
+                What makes Mindspring different
+              </span>
+              <h2 className="text-4xl font-serif font-medium text-slate-900 mb-6">
+                Child development therapy with clear, confident progress.
+              </h2>
+              <p className="max-w-2xl text-slate-600 leading-relaxed">
+                Every child deserves the chance to thrive. Our approach blends expert assessment, playful skill-building and meaningful progress that parents can see.
+              </p>
+
+              <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-1">
+                {focusItems.map((item) => (
+                  <div
+                    key={item.title}
+                    className="group rounded-[2rem] border border-slate-200 bg-white p-8 shadow-sm transition hover:-translate-y-2 hover:shadow-xl"
+                  >
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-50 text-sky-700 mb-5 transition group-hover:bg-sky-100">
+                      <span className="text-xl font-semibold">✓</span>
+                    </div>
+                    <h3 className="text-xl font-semibold text-slate-900 mb-3">{item.title}</h3>
+                    <p className="text-slate-600 leading-relaxed">{item.description}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-sky-700 via-cyan-600 to-sky-800 p-8 text-white shadow-2xl">
+              <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.25),_transparent_35%)]" />
+              <div className="relative">
+                <p className="text-sm uppercase tracking-[0.35em] text-sky-100 mb-4">How it works</p>
+                <h3 className="text-3xl font-serif font-semibold mb-8">A simple path from assessment to confidence.</h3>
+                <div className="space-y-6">
+                  {processSteps.map((step, index) => (
+                    <div key={step.title} className="flex gap-4">
+                      <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white text-slate-900 font-bold text-xl">
+                        {index + 1}
+                      </div>
+                      <div>
+                        <h4 className="text-lg font-semibold">{step.title}</h4>
+                        <p className="mt-2 text-slate-200 leading-relaxed">{step.detail}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="mt-10 rounded-[2rem] bg-white/10 p-6 ring-1 ring-white/20">
+                <p className="text-sm uppercase tracking-[0.35em] text-sky-100 mb-3">Practice focus</p>
+                <p className="text-sm text-slate-200 leading-relaxed">
+                  Progress is real when children feel safe, understood, and supported by a plan that keeps them moving ahead.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="bg-white py-24 border-y border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <span className="text-primary-600 font-bold tracking-widest uppercase text-xs mb-2 block">
-              Why Families Choose Mindspring
+              Why Parents Choose Mindspring
             </span>
             <h2 className="text-4xl font-serif font-medium text-slate-900">
               A calm, practical approach to emotional growth
@@ -105,12 +201,10 @@ export default function HomePage() {
           </div>
 
           <div className="grid gap-8 md:grid-cols-3">
-            {theme.values.map((value) => (
+            {theme.values.map((value, index) => (
               <div key={value.title} className="rounded-3xl border border-slate-200 bg-slate-50 p-10 text-center">
-                <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-primary-50 text-primary-600">
-                  <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
-                  </svg>
+                <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-primary-50 text-primary-600">
+                  <span className="text-4xl leading-none">{valueIcons[index]}</span>
                 </div>
                 <h3 className="text-xl font-semibold text-slate-900 mb-3">{value.title}</h3>
                 <p className="text-slate-600 leading-relaxed">{value.description}</p>
@@ -123,7 +217,7 @@ export default function HomePage() {
       <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <span className="text-primary-600 font-bold tracking-widest uppercase text-xs mb-2 block">Stories of growth</span>
-          <h2 className="text-4xl font-serif font-medium text-slate-900">Trusted support from families</h2>
+          <h2 className="text-4xl font-serif font-medium text-slate-900">Trusted support from parents and children</h2>
         </div>
 
         <div className="grid gap-8 md:grid-cols-3">

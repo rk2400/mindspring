@@ -12,7 +12,7 @@ import { dbConfig } from '../lib/config';
 const defaultTemplates = [
   {
     type: 'ORDER_CREATED',
-    subject: 'Order Confirmed - HulaLoop',
+    subject: 'Order Confirmed - Mindspring',
     body: `
       <h2>Hello {{userName}}!</h2>
       <p>Your order has been confirmed!</p>
@@ -26,7 +26,7 @@ const defaultTemplates = [
   },
   {
     type: 'ORDER_PACKED',
-    subject: 'Your Order is Packed - HulaLoop',
+    subject: 'Your Order is Packed - Mindspring',
     body: `
       <h2>Hello {{userName}}!</h2>
       <p>Great news! Your order has been packed and is ready to ship.</p>
@@ -39,7 +39,7 @@ const defaultTemplates = [
   },
   {
     type: 'ORDER_SHIPPED',
-    subject: 'Your Order is Shipped - HulaLoop',
+    subject: 'Your Order is Shipped - Mindspring',
     body: `
       <h2>Hello {{userName}}!</h2>
       <p>Your order is on its way!</p>
@@ -53,7 +53,7 @@ const defaultTemplates = [
   },
   {
     type: 'ORDER_DELIVERED',
-    subject: 'Order Delivered - HulaLoop',
+    subject: 'Order Delivered - Mindspring',
     body: `
       <h2>Hello {{userName}}!</h2>
       <p>Your order has been delivered!</p>
@@ -62,12 +62,12 @@ const defaultTemplates = [
       <h3>Order Summary:</h3>
       {{products}}
       <p><strong>Total Amount:</strong> ₹{{totalAmount}}</p>
-      <p>Thank you for shopping with HulaLoop! We hope you love your handmade pieces.</p>
+      <p>Thank you for shopping with Mindspring! We hope you love your handmade pieces.</p>
     `,
   },
   {
     type: 'ORDER_CANCELLED',
-    subject: 'Order Cancelled - HulaLoop',
+    subject: 'Order Cancelled - Mindspring',
     body: `
       <h2>Hello {{userName}}!</h2>
       <p>We're sorry to inform you that your order has been cancelled.</p>
@@ -82,7 +82,7 @@ const defaultTemplates = [
   },
   {
     type: 'PAYMENT_CONFIRMED',
-    subject: 'Payment Confirmed - HulaLoop',
+    subject: 'Payment Confirmed - Mindspring',
     body: `
       <h2>Hello {{userName}}!</h2>
       <p>Your payment has been confirmed successfully!</p>
@@ -94,7 +94,7 @@ const defaultTemplates = [
   },
   {
     type: 'ORDER_CONFIRMED',
-    subject: 'Your Order is Confirmed - HulaLoop',
+    subject: 'Your Order is Confirmed - Mindspring',
     body: `
       <h2>Hello {{userName}}!</h2>
       <p>Great news! Your order has been confirmed and will be shipped soon.</p>
@@ -103,7 +103,7 @@ const defaultTemplates = [
       <h3>Order Summary:</h3>
       {{products}}
       <p><strong>Total Amount:</strong> ₹{{totalAmount}}</p>
-      <p>We'll keep you updated as your order progresses. Thank you for shopping with HulaLoop!</p>
+      <p>We'll keep you updated as your order progresses. Thank you for shopping with Mindspring!</p>
     `,
   },
 ];

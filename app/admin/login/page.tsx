@@ -70,7 +70,7 @@ export default function AdminLoginPage() {
           <div className="hidden lg:flex flex-col justify-between p-12 bg-primary-600 text-white">
             <div>
               <h1 className="text-3xl font-serif font-bold">Admin Portal</h1>
-              <p className="mt-4 text-stone-100/90">Manage products, orders, and customers from a single dashboard.</p>
+              <p className="mt-4 text-stone-100/90">Manage users, appointments, and client support from a single dashboard.</p>
             </div>
             <div className="text-sm text-white/70">
               <p>Need help?</p>
@@ -88,7 +88,7 @@ export default function AdminLoginPage() {
                 onClick={() => router.push('/')}
                 className="text-sm text-primary-600 hover:text-primary-700"
               >
-                Back to Store
+                Back to site
               </button>
             </div>
 

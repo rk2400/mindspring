@@ -3,7 +3,9 @@
 import { useState, useEffect } from 'react';
 import { useUser } from '@/lib/contexts/UserContext';
 import toast from 'react-hot-toast';
+import PageHero from '@/components/PageHero';
 import { siteConfig } from '@/config/site-config';
+import { theme } from '@/config/theme';
 
 export default function ContactPage() {
   const { user } = useUser();
@@ -64,33 +66,35 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen bg-stone-50">
-      {/* Header */}
-      <div className="bg-sky-900 text-white py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <span className="block text-white/70 text-sm font-bold tracking-widest uppercase mb-4">Connect</span>
-          <h1 className="text-4xl md:text-5xl font-serif">Reach out to Mindspring</h1>
-        </div>
-      </div>
+      <PageHero
+        backgroundImage={theme.contact.hero.backgroundImage}
+        alt={theme.contact.hero.alt}
+        tagline={theme.contact.hero.tagline}
+        title={theme.contact.hero.title}
+        subtitle={theme.contact.hero.subtitle}
+      />
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-20">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-16">
+        <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
           
           {/* Contact Info Card */}
-          <div className="bg-white rounded-2xl p-8 md:p-12 shadow-sm border border-stone-100 flex flex-col justify-between h-full">
+          <div className="bg-white rounded-[2rem] p-8 md:p-12 shadow-lg border border-slate-200">
             <div>
-              <h2 className="text-2xl font-serif text-slate-900 mb-6">We're Here to Support You</h2>
-              <p className="text-slate-600 leading-relaxed mb-8">
-                Have a question about our programs, child development support, or how to book a consultation?
-                Our team is available Monday through Friday, 9am - 5pm IST.
+              <p className="text-sm font-semibold uppercase tracking-[0.32em] text-sky-600 mb-4">Get in touch</p>
+              <h2 className="text-3xl sm:text-4xl font-serif font-semibold text-slate-900 mb-6">
+                Personalized support starts with one message.
+              </h2>
+              <p className="text-slate-600 leading-relaxed">
+                Whether you are exploring therapy, parent coaching, or early child development support, our team is ready to listen and help you book the right first step.
               </p>
               
-              <div className="space-y-8">
+              <div className="mt-10 space-y-6">
                 <ContactItem 
                   icon={<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />}
                   label="Email"
                   value={siteConfig.contact.email}
                   action={
-                    <button onClick={copyEmail} className="text-xs text-primary-600 font-medium uppercase tracking-wider hover:text-primary-700 ml-2">
+                    <button onClick={copyEmail} className="text-xs text-sky-600 font-semibold uppercase tracking-wider hover:text-sky-700 ml-2">
                       Copy
                     </button>
                   }
@@ -108,19 +112,31 @@ export default function ContactPage() {
               </div>
             </div>
 
-            <div className="mt-12 pt-8 border-t border-stone-100">
-               <h3 className="font-serif text-stone-900 mb-4">Follow Our Journey</h3>
-               <div className="flex gap-4">
-                 <SocialButton label="Instagram" />
-                 <SocialButton label="Twitter" />
-                 <SocialButton label="Pinterest" />
-               </div>
+            <div className="mt-10 pt-10 border-t border-slate-200">
+              <p className="text-sm font-semibold uppercase tracking-[0.32em] text-sky-600 mb-4">Consultation hours</p>
+              <div className="space-y-2 text-sm text-slate-600">
+                <p>Monday - Friday: 9:00 am – 5:00 pm</p>
+                <p>Saturday: By appointment only</p>
+              </div>
+            </div>
+
+            <div className="mt-10 pt-10 border-t border-slate-200">
+              <p className="text-sm font-semibold uppercase tracking-[0.32em] text-sky-600 mb-4">Follow our work</p>
+              <div className="flex flex-wrap gap-3">
+                <SocialButton label="Instagram" />
+                <SocialButton label="Twitter" />
+                <SocialButton label="LinkedIn" />
+              </div>
             </div>
           </div>
-
+          
           {/* Contact Form */}
-          <div className="bg-white rounded-2xl p-8 md:p-12 shadow-sm border border-stone-100">
-            <h2 className="text-2xl font-serif text-stone-900 mb-6">Send a Message</h2>
+          <div className="bg-white rounded-[2rem] p-8 md:p-12 shadow-lg border border-slate-200">
+            <p className="text-sm font-semibold uppercase tracking-[0.32em] text-sky-600 mb-4">Send a message</p>
+            <h2 className="text-3xl font-serif font-semibold text-slate-900 mb-4">Start your consultation request</h2>
+            <p className="text-slate-600 leading-relaxed mb-8">
+              Share your details below and we’ll respond with available times and next steps for your child’s support.
+            </p>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label className="block text-sm font-medium text-stone-700 mb-2">Name</label>
@@ -128,7 +144,7 @@ export default function ContactPage() {
                   type="text"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-lg focus:outline-none focus:border-primary-500 focus:bg-white transition-all"
+                  className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-sky-500 focus:bg-white"
                   placeholder="Your Name"
                   required
                 />
@@ -139,7 +155,7 @@ export default function ContactPage() {
                   type="email"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-lg focus:outline-none focus:border-primary-500 focus:bg-white transition-all"
+                  className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-sky-500 focus:bg-white"
                   placeholder="email@example.com"
                   required
                 />
@@ -149,15 +165,15 @@ export default function ContactPage() {
                 <textarea
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-lg focus:outline-none focus:border-primary-500 focus:bg-white transition-all h-40 resize-none"
-                  placeholder="How can we help?"
+                  className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-sky-500 focus:bg-white h-40 resize-none"
+                  placeholder="Tell us about your child, your goals, or any questions."
                   required
                 />
               </div>
               <button 
                 type="submit" 
                 disabled={loading}
-                className="w-full btn btn-primary py-4"
+                className="w-full rounded-2xl bg-sky-700 px-6 py-4 text-sm font-semibold text-white transition hover:bg-sky-800 disabled:cursor-not-allowed disabled:opacity-70"
               >
                 {loading ? 'Sending...' : 'Send Message'}
               </button>
@@ -165,6 +181,38 @@ export default function ContactPage() {
           </div>
 
         </div>
+
+        <section className="bg-white rounded-[2rem] border border-slate-200 shadow-lg overflow-hidden">
+          <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] items-start">
+            <div className="p-8 md:p-12">
+              <p className="text-sm font-semibold uppercase tracking-[0.32em] text-sky-600 mb-4">Visit us</p>
+              <h2 className="text-3xl font-serif font-semibold text-slate-900 mb-4">Our studio location</h2>
+              <p className="text-slate-600 leading-relaxed mb-6">
+                A calm, child-focused space for first consultations, child development planning, and therapy sessions.
+              </p>
+              <p className="text-sm text-slate-500">
+                Use the map below for a quick overview, then open the location in Google Maps for turn-by-turn directions.
+              </p>
+              <a
+                href="https://maps.app.goo.gl/GaccgKELwMNUhjqD8?g_st=iw"
+                target="_blank"
+                rel="noreferrer"
+                className="mt-8 inline-flex items-center rounded-full bg-sky-700 px-5 py-3 text-sm font-semibold text-white transition hover:bg-sky-800"
+              >
+                Open in Google Maps
+              </a>
+            </div>
+            <div className="relative h-[28rem] overflow-hidden bg-slate-100">
+              <iframe
+                title="Mindspring studio location"
+                src="https://maps.google.com/maps?q=28.640707,77.340614&z=17&output=embed"
+                className="absolute inset-0 h-full w-full border-0"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
+          </div>
+        </section>
       </main>
     </div>
   );

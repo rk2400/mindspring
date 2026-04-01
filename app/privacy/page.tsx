@@ -1,8 +1,18 @@
 import Link from 'next/link';
+import PageHero from '@/components/PageHero';
+import { theme } from '@/config/theme';
 
 export default function PrivacyPolicyPage() {
   return (
     <div className="min-h-screen bg-gray-50">
+      <PageHero
+        backgroundImage={theme.privacy.hero.backgroundImage}
+        alt={theme.privacy.hero.alt}
+        tagline={theme.privacy.hero.tagline}
+        title={theme.privacy.hero.title}
+        subtitle={theme.privacy.hero.subtitle}
+      />
+
       <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <h1 className="text-4xl font-serif font-bold text-stone-900 mb-6">Privacy Policy</h1>
         <p className="text-stone-600 mb-8">

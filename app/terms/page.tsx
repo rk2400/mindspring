@@ -1,8 +1,18 @@
 import Link from 'next/link';
+import PageHero from '@/components/PageHero';
+import { theme } from '@/config/theme';
 
 export default function TermsPage() {
   return (
     <div className="min-h-screen bg-sky-50">
+      <PageHero
+        backgroundImage={theme.terms.hero.backgroundImage}
+        alt={theme.terms.hero.alt}
+        tagline={theme.terms.hero.tagline}
+        title={theme.terms.hero.title}
+        subtitle={theme.terms.hero.subtitle}
+      />
+
       <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <h1 className="text-4xl font-serif font-bold text-slate-900 mb-6">Terms of Service</h1>
         <p className="text-slate-600 mb-8">
@@ -13,7 +23,7 @@ export default function TermsPage() {
           <div>
             <h2 className="text-xl font-medium text-slate-900 mb-2">Service Agreement</h2>
             <p>
-              Mindspring provides mental health and child development support. We work with families to offer tailored guidance, coaching, and resources.
+              Mindspring provides mental health and child development support. We work with children and caregivers to offer tailored guidance, coaching, and resources.
             </p>
           </div>
 

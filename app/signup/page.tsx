@@ -80,7 +80,7 @@ export default function SignupPage() {
           <Link href="/" className="text-2xl font-serif tracking-wide">Mindspring</Link>
           <div className="max-w-md">
             <h2 className="text-4xl font-serif mb-4 text-white/80 ">Join our supportive community</h2>
-            <p className="text-stone-200 text-lg">Create an account to receive service updates, booking details, and family wellbeing insights.</p>
+            <p className="text-stone-200 text-lg">Create an account to receive service updates, booking details, and child development insights.</p>
           </div>
         </div>
       </div>

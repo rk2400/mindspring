@@ -72,7 +72,7 @@ async function handler(req: AuthRequest) {
 
     // Get email template
     const foundTemplate = await EmailTemplate.findOne({ type: 'ORDER_CREATED' });
-    let subject = foundTemplate?.subject ?? 'Order Confirmed - HulaLoop';
+    let subject = foundTemplate?.subject ?? 'Order Confirmed - Mindspring';
     let emailBody = foundTemplate?.body ?? `
       <h2>Hello {{userName}}!</h2>
       <p>Your order has been confirmed!</p>

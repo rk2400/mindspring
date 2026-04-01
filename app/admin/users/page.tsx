@@ -44,7 +44,7 @@ export default function AdminUsersPage() {
       <AdminHeader />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h1 className="text-4xl font-bold mb-8">All Users</h1>
+        <h1 className="text-4xl font-bold mb-8">Users</h1>
         
         {users.length === 0 ? (
           <div className="text-center py-12">
@@ -93,10 +93,10 @@ export default function AdminUsersPage() {
                         {user.locked ? 'Unlock' : 'Lock'}
                       </button>
                       <Link
-                        href={`/admin/users/${user._id}/orders`}
+                        href={`/admin/users/${user._id}`}
                         className="btn btn-secondary ml-2"
                       >
-                        View Orders
+                        View profile
                       </Link>
                     </td>
                   </tr>

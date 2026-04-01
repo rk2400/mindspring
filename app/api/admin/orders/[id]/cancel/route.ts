@@ -66,7 +66,7 @@ async function handler(
       const foundTemplate = await EmailTemplate.findOne({ type: templateType });
       
       // Use template subject and body, with fallback defaults
-      let subject = foundTemplate?.subject ?? `Order Cancelled - HulaLoop`;
+      let subject = foundTemplate?.subject ?? `Order Cancelled - Mindspring`;
       let body = foundTemplate?.body ?? `
         <h2>Hello {{userName}}!</h2>
         <p>We're sorry to inform you that your order has been cancelled.</p>

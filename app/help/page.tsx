@@ -3,16 +3,18 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import Link from 'next/link';
+import PageHero from '@/components/PageHero';
+import { theme } from '@/config/theme';
 
 export default function HelpPage() {
   const faqs = [
     {
       question: 'What services does Mindspring offer?',
-      answer: 'We provide parent coaching, child development support, family wellness planning, and guided emotional wellbeing sessions for children and families.',
+      answer: 'We provide child development support, mental health therapy, and expert guidance for children and caregivers.',
     },
     {
       question: 'How do I book a consultation?',
-      answer: 'Visit the contact page, share your details, and our team will reach out to schedule a session that fits your family’s needs.',
+      answer: 'Visit the contact page, share your details, and our team will reach out to schedule a session that fits your child’s needs.',
     },
     {
       question: 'Can Mindspring support my child’s emotional development?',
@@ -20,11 +22,11 @@ export default function HelpPage() {
     },
     {
       question: 'Is support available for parents too?',
-      answer: 'Absolutely. Our parent coaching includes guidance on routines, stress management, and building strong family relationships.',
+      answer: 'Absolutely. Our parent coaching includes guidance on routines, stress management, and practical support for child development.',
     },
     {
       question: 'What can I expect from a first session?',
-      answer: 'We begin with a compassionate discovery conversation, assess your goals, and recommend a supportive path tailored to your family.',
+      answer: 'We begin with a compassionate discovery conversation, assess your goals, and recommend a supportive path tailored to your child.',
     },
     {
       question: 'How does Mindspring keep sessions safe?',
@@ -36,11 +38,19 @@ export default function HelpPage() {
 
   return (
     <div className="min-h-screen bg-sky-50">
+      <PageHero
+        backgroundImage={theme.help.hero.backgroundImage}
+        alt={theme.help.hero.alt}
+        tagline={theme.help.hero.tagline}
+        title={theme.help.hero.title}
+        subtitle={theme.help.hero.subtitle}
+      />
+
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="flex flex-col md:flex-row items-center gap-8 mb-8">
           <div className="flex-1">
             <h1 className="text-4xl font-bold text-slate-900">Help & Support</h1>
-            <p className="text-slate-600 mt-2">Answers to common questions about our family-centered mental health and child development services.</p>
+            <p className="text-slate-600 mt-2">Answers to common questions about our child-focused mental health and development services.</p>
           </div>
           <div className="relative w-full md:w-40 h-32 rounded-xl overflow-hidden shadow-sm">
             <Image

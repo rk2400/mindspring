@@ -21,9 +21,9 @@ export const siteConfig = {
 
   // Contact info used across the site and in email templates.
   contact: {
-    email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || theme.contact?.email || 'support@cozycrochet.com',
-    phone: process.env.NEXT_PUBLIC_CONTACT_PHONE || theme.contact?.phone || '+1 (555) 123-4567',
-    address: process.env.NEXT_PUBLIC_CONTACT_ADDRESS || theme.contact?.studio || '123 Main St, Anytown, USA',
+    email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || theme.contact?.email || 'hello@mindspring.co',
+    phone: process.env.NEXT_PUBLIC_CONTACT_PHONE || theme.contact?.phone || '+91 98765 43210',
+    address: process.env.NEXT_PUBLIC_CONTACT_ADDRESS || theme.contact?.studio || 'Bengaluru, India',
   },
 
   // Social links (optional)

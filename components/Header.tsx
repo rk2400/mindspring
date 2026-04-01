@@ -22,6 +22,7 @@ export default function Header() {
     { name: 'Home', href: '/' },
     { name: 'About', href: '/about' },
     { name: 'Therapy', href: '/therapy' },
+    ...(user ? [{ name: 'Appointments', href: '/appointments' }] : []),
     { name: 'Help', href: '/help' },
     { name: 'Contact', href: '/contact' },
   ];
@@ -29,7 +30,7 @@ export default function Header() {
   return (
     <div>
       <div className="bg-primary-600 text-white text-xs md:text-sm py-2 px-4 text-center">
-        Mindspring supports families with child development coaching and emotional wellbeing guidance.
+        Mindspring supports children with expert therapies for speech, learning, attention, behaviour and sensory development.
       </div>
 
       <div className="bg-white/95 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200 transition-all duration-300">

@@ -20,6 +20,31 @@ export const verifyOTPSchema = z.object({
   code: z.string().length(6, 'OTP must be 6 digits'),
 });
 
+export const appointmentSchema = z.object({
+  therapyType: z.enum([
+    'Speech Therapy',
+    'Occupational Therapy',
+    'ABA Therapy',
+    'Special Education',
+    'Sensory Integration',
+    'Cognitive Skills Training',
+  ]),
+  preferredDate: z.string().regex(/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/, 'Date must be in YYYY-MM-DD format'),
+  preferredTime: z.string().min(1, 'Preferred time is required'),
+  notes: z.string().max(500).optional(),
+  duration: z.string().max(100).optional(),
+});
+
+export const adminAppointmentSchema = appointmentSchema.extend({
+  userId: z.string().min(1, 'User ID is required'),
+  adminNote: z.string().max(500).optional(),
+});
+
+export const appointmentStatusSchema = z.object({
+  status: z.enum(['REQUESTED', 'CONFIRMED', 'COMPLETED', 'CANCELLED']),
+  note: z.string().max(500).optional(),
+});
+
 export const adminLoginSchema = z.object({
   email: z.string().email('Invalid email address'),
   password: z.string().min(6, 'Password must be at least 6 characters'),

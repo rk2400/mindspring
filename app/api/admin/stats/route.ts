@@ -1,30 +1,26 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/db';
-import Order from '@/lib/models/Order';
-import Product from '@/lib/models/Product';
 import User from '@/lib/models/User';
+import Appointment from '@/lib/models/Appointment';
 import { withAdminAuth } from '@/lib/middleware';
 
 export const GET = withAdminAuth(async (req) => {
   try {
     await connectDB();
 
-    const [totalOrders, totalRevenue, totalProducts, totalUsers] = await Promise.all([
-      Order.countDocuments(),
-      Order.aggregate([
-        { $match: { paymentStatus: 'PAID' } },
-        { $group: { _id: null, total: { $sum: '$totalAmount' } } },
-      ]),
-      Product.countDocuments({ status: 'active' }),
+    const [totalUsers, totalAppointments] = await Promise.all([
       User.countDocuments(),
+      Appointment.countDocuments(),
     ]);
 
-    const revenue = totalRevenue[0]?.total || 0;
+    const revenue = 0;
 
-    const ordersByStatus = await Order.aggregate([
+    const ordersByStatus: any[] = [];
+
+    const appointmentsByStatus = await Appointment.aggregate([
       {
         $group: {
-          _id: '$orderStatus',
+          _id: '$status',
           count: { $sum: 1 },
         },
       },
@@ -32,11 +28,13 @@ export const GET = withAdminAuth(async (req) => {
 
     return NextResponse.json({
       stats: {
-        totalOrders,
+        totalOrders: 0,
         totalRevenue: revenue,
-        totalProducts,
+        totalProducts: 0,
         totalUsers,
-        ordersByStatus: ordersByStatus.reduce((acc: any, item: any) => {
+        totalAppointments,
+        ordersByStatus: {},
+        appointmentsByStatus: appointmentsByStatus.reduce((acc: any, item: any) => {
           acc[item._id] = item.count;
           return acc;
         }, {}),

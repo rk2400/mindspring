@@ -3,10 +3,8 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { Toaster } from 'react-hot-toast';
 import { UserProvider } from '@/lib/contexts/UserContext';
-import { CartProvider } from '@/lib/contexts/CartContext';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import Script from 'next/script';
 import { siteConfig } from '@/config/site-config';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -42,19 +40,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <UserProvider>
-          <CartProvider>
-            <Header />
-              {children}
-              <Footer />
-            <Toaster position="top-right" />
-            {process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID && (
-              <Script
-                id="razorpay-checkout-js"
-                src="https://checkout.razorpay.com/v1/checkout.js"
-                strategy="lazyOnload"
-              />
-            )}
-          </CartProvider>
+          <Header />
+          {children}
+          <Footer />
+          <Toaster position="top-right" />
         </UserProvider>
       </body>
     </html>

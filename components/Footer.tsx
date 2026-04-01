@@ -10,7 +10,7 @@ export default function Footer() {
               <span className="text-2xl font-serif text-white tracking-wide">Mindspring</span>
             </Link>
             <p className="text-slate-400 leading-relaxed max-w-xs">
-              Mindspring helps families and children build emotional strength, healthy routines, and supportive relationships.
+              Mindspring helps children build emotional strength, confident routines, and resilient support skills.
             </p>
             <div className="flex gap-4">
               <SocialLink href="#" label="Instagram" icon={<path d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zm5 6a5 5 0 100 10 5 5 0 000-10z" />} />
@@ -25,7 +25,7 @@ export default function Footer() {
               <FooterLink href="/about">About Mindspring</FooterLink>
               <FooterLink href="/help">Help Center</FooterLink>
               <FooterLink href="/contact">Contact</FooterLink>
-              <FooterLink href="/about">Family Support</FooterLink>
+              <FooterLink href="/about">Child Development</FooterLink>
             </ul>
           </div>
 
@@ -42,7 +42,7 @@ export default function Footer() {
           <div>
             <h4 className="text-white font-serif text-lg mb-6">Wellbeing Notes</h4>
             <p className="text-slate-400 mb-4 text-sm">
-              Subscribe for family wellbeing tips, child development updates, and mindful parenting ideas.
+              Subscribe for child development updates, practical therapy tips, and confident growth ideas.
             </p>
             <form className="flex flex-col gap-3">
               <input 

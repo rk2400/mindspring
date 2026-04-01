@@ -1,15 +1,17 @@
+import PageHero from '@/components/PageHero';
+import { theme } from '@/config/theme';
+
 export default function ShippingReturnsPage() {
   return (
     <div className="bg-stone-50 min-h-screen">
-      <section className="bg-white border-b border-stone-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 text-center">
-          <span className="text-primary-600 font-medium tracking-widest uppercase text-sm mb-3 block">Support</span>
-          <h1 className="text-4xl md:text-5xl font-serif text-stone-900">Shipping & Returns</h1>
-          <p className="max-w-2xl mx-auto text-stone-600 mt-3">
-            Clear and simple policies designed for transparency as we grow.
-          </p>
-        </div>
-      </section>
+      <PageHero
+        backgroundImage={theme.shipping.hero.backgroundImage}
+        alt={theme.shipping.hero.alt}
+        tagline={theme.shipping.hero.tagline}
+        title={theme.shipping.hero.title}
+        subtitle={theme.shipping.hero.subtitle}
+      />
+
       <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-8">
         <div className="card p-8">
           <h2 className="text-2xl font-serif text-stone-900 mb-4">Shipping</h2>

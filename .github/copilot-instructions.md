@@ -1,4 +1,4 @@
-# Copilot Instructions — HulaLoop
+# Copilot Instructions — Mindspring
 
 Purpose: give an AI coding agent the minimal, actionable context to be productive in this repo.
 

@@ -37,7 +37,7 @@ async function handler(
     const foundTemplate = await EmailTemplate.findOne({ type: templateType });
     
     // Use template subject and body, with fallback defaults
-    let subject = foundTemplate?.subject ?? `Order ${order.orderStatus} - HulaLoop`;
+    let subject = foundTemplate?.subject ?? `Order ${order.orderStatus} - Mindspring`;
     let body = foundTemplate?.body ?? `
       <h2>Hello {{userName}}!</h2>
       <p>Your order status update!</p>

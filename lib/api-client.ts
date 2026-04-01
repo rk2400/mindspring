@@ -142,6 +142,33 @@ export async function saveAddress(address: AddressPayload) {
   return data;
 }
 
+export async function getAppointments() {
+  const res = await fetch(`${API_URL}/api/appointments`, {
+    credentials: 'include',
+    cache: 'no-store',
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Failed to fetch appointments');
+  return data.appointments;
+}
+
+export async function bookAppointment(payload: {
+  therapyType: string;
+  preferredDate: string;
+  preferredTime: string;
+  notes?: string;
+}) {
+  const res = await fetch(`${API_URL}/api/appointments`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify(payload),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Failed to book appointment');
+  return data.appointment;
+}
+
 export async function createAccount(name: string, email: string, phone: string) {
   const res = await fetch(`${API_URL}/api/auth/signup`, {
     method: 'POST',
@@ -375,6 +402,48 @@ export async function getAdminStats() {
   return data.stats;
 }
 
+export async function getAdminAppointments() {
+  const res = await fetch(`${API_URL}/api/admin/appointments`, {
+    credentials: 'include',
+    cache: 'no-store',
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Failed to fetch appointments');
+  return data.appointments;
+}
+
+export async function createAdminAppointment(payload: {
+  userId: string;
+  therapyType: string;
+  preferredDate: string;
+  preferredTime: string;
+  duration?: string;
+  notes?: string;
+  adminNote?: string;
+}) {
+  const res = await fetch(`${API_URL}/api/admin/appointments`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify(payload),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Failed to create appointment');
+  return data.appointment;
+}
+
+export async function updateAppointmentStatus(id: string, status: string, note?: string) {
+  const res = await fetch(`${API_URL}/api/admin/appointments/${id}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify({ status, note }),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Failed to update appointment');
+  return data.appointment;
+}
+
 export async function getAdminUsers() {
   const res = await fetch(`${API_URL}/api/admin/users`, {
     credentials: 'include',
@@ -405,6 +474,16 @@ export async function getAdminUser(id: string) {
   const data = await res.json();
   if (!res.ok) throw new Error(data.error || 'Failed to fetch user');
   return data.user;
+}
+
+export async function getAdminUserAppointments(userId: string) {
+  const res = await fetch(`${API_URL}/api/admin/appointments?userId=${encodeURIComponent(userId)}`, {
+    credentials: 'include',
+    cache: 'no-store',
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Failed to fetch user appointments');
+  return data.appointments;
 }
 
 // Admin Coupons

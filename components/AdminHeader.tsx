@@ -39,12 +39,10 @@ export default function AdminHeader() {
 
           <nav className={`hidden md:flex gap-4 ${open ? 'block' : ''}`}>
             <Link href="/admin/dashboard" className="text-gray-700 hover:text-primary-600 flex items-center gap-2">Dashboard</Link>
-            <Link href="/admin/products" className="text-gray-700 hover:text-primary-600 flex items-center gap-2">Products</Link>
-            <Link href="/admin/orders" className="text-gray-700 hover:text-primary-600 flex items-center gap-2">Orders</Link>
-            <Link href="/admin/payments" className="text-gray-700 hover:text-primary-600 flex items-center gap-2">💳 Payments</Link>
+            <Link href="/admin/appointments" className="text-gray-700 hover:text-primary-600 flex items-center gap-2">Appointments</Link>
             <Link href="/admin/users" className="text-gray-700 hover:text-primary-600 flex items-center gap-2">Users</Link>
             <Link href="/admin/emails" className="text-gray-700 hover:text-primary-600 flex items-center gap-2">Email Templates</Link>
-            <Link href="/" className="text-gray-700 hover:text-primary-600 flex items-center gap-2">Store</Link>
+            <Link href="/" className="text-gray-700 hover:text-primary-600 flex items-center gap-2">Main site</Link>
             <button onClick={() => { logout && logout(); router.push('/'); }} className="ml-4 text-sm px-3 py-1 rounded bg-red-50 text-red-600 hover:bg-red-100">Logout</button>
           </nav>
         </div>

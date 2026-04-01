@@ -1,32 +1,22 @@
 import { siteConfig } from '@/config/site-config';
-import { getProductsFromDb } from '@/lib/products';
 
 export async function GET() {
   const baseUrl = siteConfig.url.replace(/\/$/, '');
   const staticRoutes = [
     '/',
-    '/products',
+    '/therapy',
+    '/appointments',
     '/about',
     '/contact',
     '/help',
     '/login',
     '/signup',
-    '/cart',
     '/profile',
+    '/privacy',
+    '/terms',
   ];
 
-  let productUrls: string[] = [];
-  try {
-    const products = await getProductsFromDb({ status: 'active', limit: 200 });
-    productUrls = products
-      .filter((p: any) => p._id)
-      .map((p: any) => `/products/${p._id}`);
-  } catch (error) {
-    // If product fetch fails (e.g. no DB), still return sitemap with static routes.
-    console.warn('Failed to generate sitemap product URLs', error);
-  }
-
-  const urls = [...staticRoutes, ...productUrls];
+  const urls = [...staticRoutes];
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   ${urls
