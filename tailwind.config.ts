@@ -10,8 +10,9 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
-        serif: ['var(--font-serif)', 'Georgia', 'serif'],
+        sans: ['Tahoma', "'MS Sans Serif'", 'Arial', 'sans-serif'],
+        serif: ["'Times New Roman'", 'Times', 'serif'],
+        mono: ["'Courier New'", 'Courier', 'monospace'],
       },
       colors: {
         // Theme colors are sourced from the selected theme.
@@ -34,6 +35,7 @@ const config: Config = {
       animation: {
         'fade-in': 'fadeIn 0.5s ease-out',
         'slide-up': 'slideUp 0.5s ease-out',
+        'marquee': 'marquee 22s linear infinite',
       },
       keyframes: {
         fadeIn: {
